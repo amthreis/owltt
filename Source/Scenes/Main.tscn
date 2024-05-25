@@ -1,14 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://csjndwc4wtdud"]
+[gd_scene load_steps=16 format=3 uid="uid://csjndwc4wtdud"]
 
 [ext_resource type="Texture2D" uid="uid://dn447rd515u2c" path="res://Source/Textures/Logo.svg" id="1_505f1"]
+[ext_resource type="Script" path="res://Code/UI/UIGraphLines.cs" id="1_r84ld"]
 [ext_resource type="PackedScene" uid="uid://b04xm7dsad1c3" path="res://Source/Prefabs/GraphHour.tscn" id="2_1u78g"]
+[ext_resource type="Script" path="res://Code/UI/UIGraphHour.cs" id="3_i1ega"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mf8o"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
-
-[sub_resource type="SystemFont" id="SystemFont_r7dxy"]
-font_names = PackedStringArray("Bahnschrift")
-font_weight = 900
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8qdxj"]
 draw_center = false
@@ -117,7 +115,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8mf8o")
 metadata/_edit_lock_ = true
 
-[node name="Vert" type="VBoxContainer" parent="."]
+[node name="Lines" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(48, 0)
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,245 +124,182 @@ offset_top = 44.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 2
+script = ExtResource("1_r84ld")
+LineWidth = 2
+LineColor = Color(0.154876, 0.154876, 0.154876, 1)
 metadata/_edit_lock_ = true
 
-[node name="Control" type="Control" parent="Vert"]
+[node name="Margin" type="Control" parent="Lines"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="1" type="Control" parent="Vert"]
+[node name="1" type="Control" parent="Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColorRect2" type="ColorRect" parent="Vert/1"]
+[node name="Line" type="ColorRect" parent="Lines/1"]
 z_index = -6
-custom_minimum_size = Vector2(0, 2)
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -1.0
-offset_bottom = 1.0
+offset_bottom = 2.0
 grow_horizontal = 2
-color = Color(0.184314, 0.184314, 0.184314, 1)
+color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="2" type="Control" parent="Vert"]
+[node name="2" type="Control" parent="Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Vert/2"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "11h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="3" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/3"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "10h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="4" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/4"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "9h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="5" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/5"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "8h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="6" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/6"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "7h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="7" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/7"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "6h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="8" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/8"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "5h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="9" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/9"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "4h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="10" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/10"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "3h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="11" type="Control" parent="Vert"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Vert/11"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "2h"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect" type="ColorRect" parent="Vert/11"]
+[node name="Line" type="ColorRect" parent="Lines/2"]
 z_index = -6
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 2.0
 grow_horizontal = 2
-color = Color(0.184314, 0.184314, 0.184314, 1)
+color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="Vert/11"]
-visible = false
-z_index = -6
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -46.5
-offset_right = 849.0
-offset_bottom = -45.5
-grow_vertical = 2
-color = Color(0.184314, 0.184314, 0.184314, 1)
-
-[node name="12" type="Control" parent="Vert"]
+[node name="3" type="Control" parent="Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Vert/12"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+[node name="Line" type="ColorRect" parent="Lines/3"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -11.0
-offset_bottom = 12.0
+offset_bottom = 2.0
 grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_r7dxy")
-theme_override_font_sizes/font_size = 13
-text = "1h"
-horizontal_alignment = 1
-vertical_alignment = 1
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="4" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/4"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="5" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/5"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="6" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/6"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="7" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/7"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="8" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/8"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="9" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/9"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="10" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/10"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="11" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/11"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="12" type="Control" parent="Lines"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="Lines/12"]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
 
 [node name="HUD" type="VBoxContainer" parent="."]
 self_modulate = Color(0.12549, 0.12549, 0.12549, 1)
@@ -736,15 +671,69 @@ custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 alignment = 2
 
-[node name="Control" type="Control" parent="HUD/Main/Graph/Vert"]
+[node name="Margin" type="Control" parent="HUD/Main/Graph/Vert"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="1" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="12" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
 layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 12
+
+[node name="11" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 11
+
+[node name="10" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 10
+
+[node name="9" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 9
+
+[node name="8" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 8
+
+[node name="7" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 7
+
+[node name="6" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 6
+
+[node name="5" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 5
+
+[node name="4" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 4
+
+[node name="3" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 3
 
 [node name="2" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
 layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 2
+
+[node name="1" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+layout_mode = 2
+script = ExtResource("3_i1ega")
+Hour = 1
 
 [node name="Scroll" type="ScrollContainer" parent="HUD/Main/Graph"]
 layout_mode = 2
