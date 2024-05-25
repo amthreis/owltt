@@ -1,10 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://csjndwc4wtdud"]
+[gd_scene load_steps=24 format=3 uid="uid://csjndwc4wtdud"]
 
 [ext_resource type="Texture2D" uid="uid://dn447rd515u2c" path="res://Source/Textures/Logo.svg" id="1_505f1"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphLines.cs" id="1_r84ld"]
+[ext_resource type="Script" path="res://Code/Main.cs" id="1_wlvfh"]
 [ext_resource type="PackedScene" uid="uid://b04xm7dsad1c3" path="res://Source/Prefabs/GraphHour.tscn" id="2_1u78g"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphHour.cs" id="3_i1ega"]
+[ext_resource type="PackedScene" uid="uid://t21k77jgn7g0" path="res://Source/Prefabs/GraphLine.tscn" id="3_mlqkm"]
 [ext_resource type="PackedScene" uid="uid://du45e425p27rp" path="res://Source/Prefabs/GraphItem.tscn" id="5_dywsh"]
+[ext_resource type="Script" path="res://Code/UI/UIGraphItem.cs" id="6_7t8ki"]
+[ext_resource type="Texture2D" uid="uid://cycky6uaw4dny" path="res://Source/Textures/Stopwatch.png" id="7_n08x4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mf8o"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
@@ -16,11 +20,34 @@ border_color = Color(0.184314, 0.184314, 0.184314, 1)
 shadow_color = Color(0, 0, 0, 0.172549)
 shadow_size = 3
 
-[sub_resource type="SystemFont" id="SystemFont_0jv2t"]
-
 [sub_resource type="SystemFont" id="SystemFont_ff0lq"]
 font_names = PackedStringArray("Bahnschrift")
 font_weight = 900
+
+[sub_resource type="SystemFont" id="SystemFont_0jv2t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36eer"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.169245, 0.169245, 0.169245, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h3m43"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.184314, 0.184314, 0.184314, 1)
+draw_center = false
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pllcm"]
 draw_center = false
@@ -92,6 +119,8 @@ shadow_size = 3
 font_names = PackedStringArray("Bahnschrift")
 font_weight = 900
 
+[sub_resource type="Theme" id="Theme_pjlc7"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_asjf1"]
 draw_center = false
 border_width_left = 1
@@ -104,7 +133,11 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" node_paths=PackedStringArray("linesCtr", "hoursCtr")]
+script = ExtResource("1_wlvfh")
+TargetHours = 3
+linesCtr = NodePath("Margin/Lines")
+hoursCtr = NodePath("HUD/Main/Graph/Hours")
 
 [node name="BG" type="Panel" parent="."]
 z_index = -10
@@ -123,7 +156,7 @@ anchor_bottom = 1.0
 offset_top = 44.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_bottom = 45
+theme_override_constants/margin_bottom = 50
 
 [node name="Lines" type="VBoxContainer" parent="Margin"]
 custom_minimum_size = Vector2(48, 0)
@@ -138,173 +171,50 @@ metadata/_edit_lock_ = true
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="1" type="Control" parent="Margin/Lines"]
+[node name="1" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/1"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="2" type="Control" parent="Margin/Lines"]
+[node name="2" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/2"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="3" type="Control" parent="Margin/Lines"]
+[node name="3" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/3"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="4" type="Control" parent="Margin/Lines"]
+[node name="4" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/4"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="5" type="Control" parent="Margin/Lines"]
+[node name="5" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/5"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="6" type="Control" parent="Margin/Lines"]
+[node name="6" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/6"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="7" type="Control" parent="Margin/Lines"]
+[node name="7" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/7"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="8" type="Control" parent="Margin/Lines"]
+[node name="8" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/8"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="9" type="Control" parent="Margin/Lines"]
+[node name="9" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/9"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="10" type="Control" parent="Margin/Lines"]
+[node name="10" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/10"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="11" type="Control" parent="Margin/Lines"]
+[node name="11" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Margin/Lines/11"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
-
-[node name="12" type="Control" parent="Margin/Lines"]
+[node name="12" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Line" type="ColorRect" parent="Margin/Lines/12"]
-z_index = -6
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-color = Color(0.154876, 0.154876, 0.154876, 1)
 
 [node name="HUD" type="VBoxContainer" parent="."]
 self_modulate = Color(0.12549, 0.12549, 0.12549, 1)
@@ -349,63 +259,6 @@ texture = ExtResource("1_505f1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Score" type="TextureProgressBar" parent="HUD/TopBar"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -94.0
-offset_top = -14.5
-offset_right = -68.0
-offset_bottom = 11.5
-grow_horizontal = 0
-grow_vertical = 2
-step = 5.0
-value = 90.0
-fill_mode = 4
-nine_patch_stretch = true
-texture_under = ExtResource("1_505f1")
-texture_progress = ExtResource("1_505f1")
-tint_under = Color(0.244776, 0.244776, 0.244776, 1)
-tint_progress = Color(0.694965, 0.960152, 0.99149, 1)
-
-[node name="Title" type="Label" parent="HUD/TopBar/Score"]
-self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -11.0
-offset_right = -30.0
-offset_bottom = 11.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_0jv2t")
-theme_override_font_sizes/font_size = 13
-text = "score"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="HUD/TopBar/Score"]
-self_modulate = Color(0.694118, 0.960784, 0.992157, 1)
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 31.0
-offset_top = -9.5
-offset_right = 69.0
-offset_bottom = 9.5
-grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_ff0lq")
-theme_override_font_sizes/font_size = 18
-text = "100%"
-
 [node name="Time" type="HBoxContainer" parent="HUD/TopBar"]
 layout_mode = 1
 anchors_preset = 6
@@ -413,9 +266,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -469.0
+offset_left = -614.0
 offset_top = -9.0
-offset_right = -150.0
+offset_right = -232.0
 offset_bottom = 10.0
 grow_horizontal = 0
 grow_vertical = 2
@@ -493,6 +346,100 @@ theme_override_font_sizes/font_size = 13
 text = "today"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="Score" type="TextureProgressBar" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -176.0
+offset_top = -13.0
+offset_right = -150.0
+offset_bottom = 13.0
+grow_horizontal = 0
+grow_vertical = 2
+step = 5.0
+value = 60.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("1_505f1")
+texture_progress = ExtResource("1_505f1")
+tint_under = Color(0.244776, 0.244776, 0.244776, 1)
+tint_progress = Color(0.984061, 0.914104, 0.505358, 1)
+
+[node name="Title" type="Label" parent="HUD/TopBar/Score"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -11.0
+offset_right = -30.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_0jv2t")
+theme_override_font_sizes/font_size = 13
+text = "score"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="HUD/TopBar/Score"]
+self_modulate = Color(0.984314, 0.913725, 0.505882, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 31.0
+offset_top = -9.5
+offset_right = 69.0
+offset_bottom = 9.5
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_ff0lq")
+theme_override_font_sizes/font_size = 18
+text = "100%"
+
+[node name="Stopwatch" type="TextureRect" parent="HUD/TopBar"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -109.0
+offset_top = -12.0
+offset_right = -85.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("7_n08x4")
+
+[node name="Timer" type="Button" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -13.0
+offset_right = -13.0
+offset_bottom = 13.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/hover = SubResource("StyleBoxFlat_36eer")
+theme_override_styles/normal = SubResource("StyleBoxFlat_h3m43")
+text = "Timer"
+icon = ExtResource("7_n08x4")
+expand_icon = true
 
 [node name="BottomBar" type="Panel" parent="HUD"]
 visible = false
@@ -671,82 +618,96 @@ theme_override_constants/separation = 0
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Vert" type="VBoxContainer" parent="HUD/Main/Graph"]
+[node name="Hours" type="VBoxContainer" parent="HUD/Main/Graph"]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 alignment = 2
 
-[node name="Margin" type="Control" parent="HUD/Main/Graph/Vert"]
+[node name="MarginT" type="Control" parent="HUD/Main/Graph/Hours"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="12" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="12x" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 12
 
-[node name="11" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="11" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 11
 
-[node name="10" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="10" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 10
 
-[node name="9" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="9" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 9
 
-[node name="8" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="8" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 8
 
-[node name="7" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="7" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 7
 
-[node name="6" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="6" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 6
 
-[node name="5" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="Hour" parent="HUD/Main/Graph/Hours/6" index="0"]
+text = "6h"
+
+[node name="5" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 5
 
-[node name="4" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="4" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 4
 
-[node name="3" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="3" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 3
 
-[node name="2" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="2" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 2
 
-[node name="1" parent="HUD/Main/Graph/Vert" instance=ExtResource("2_1u78g")]
+[node name="1" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 1
 
-[node name="MarginB" type="Control" parent="HUD/Main/Graph/Vert"]
-custom_minimum_size = Vector2(0, 40)
+[node name="MarginB" type="Control" parent="HUD/Main/Graph/Hours"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
 [node name="Scroll" type="ScrollContainer" parent="HUD/Main/Graph"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = SubResource("Theme_pjlc7")
+horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
 [node name="Margin" type="MarginContainer" parent="HUD/Main/Graph/Scroll"]
@@ -767,9 +728,58 @@ theme_override_constants/separation = 30
 
 [node name="0" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
+script = ExtResource("6_7t8ki")
+Value = 0.005
+
+[node name="1" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+script = ExtResource("6_7t8ki")
+Value = 0.552
+
+[node name="6" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+script = ExtResource("6_7t8ki")
+Value = 0.235
+
+[node name="7" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+script = ExtResource("6_7t8ki")
+Value = 0.161
+
+[node name="8" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+script = ExtResource("6_7t8ki")
+Value = 0.293
+
+[node name="9" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+script = ExtResource("6_7t8ki")
+Value = 0.78
+
+[node name="10" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+script = ExtResource("6_7t8ki")
+Value = 0.547
+
+[node name="11" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+script = ExtResource("6_7t8ki")
+Value = 0.997
+
+[node name="2" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+
+[node name="3" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+
+[node name="4" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
+
+[node name="5" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+layout_mode = 2
 
 [node name="MarginB" type="Control" parent="HUD/Main/Graph/Scroll/Margin/Items"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 metadata/_edit_lock_ = true
 
@@ -782,3 +792,5 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_asjf1")
 metadata/_edit_lock_ = true
+
+[editable path="HUD/Main/Graph/Hours/6"]

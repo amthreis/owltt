@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://t21k77jgn7g0"]
+
+[node name="1" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="."]
+z_index = -6
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)

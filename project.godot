@@ -12,7 +12,8 @@ config_version=5
 
 config/name="C:/Users/Matheus/Documents/dev - Taskeru"
 run/main_scene="res://Source/Scenes/Main.tscn"
-config/features=PackedStringArray("4.3", "Mobile")
+config/features=PackedStringArray("4.3", "C#", "Mobile")
+run/max_fps=60
 config/icon="res://Source/Textures/Logo.svg"
 
 [display]
