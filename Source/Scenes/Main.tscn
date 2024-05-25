@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://csjndwc4wtdud"]
+[gd_scene load_steps=17 format=3 uid="uid://csjndwc4wtdud"]
 
 [ext_resource type="Texture2D" uid="uid://dn447rd515u2c" path="res://Source/Textures/Logo.svg" id="1_505f1"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphLines.cs" id="1_r84ld"]
 [ext_resource type="PackedScene" uid="uid://b04xm7dsad1c3" path="res://Source/Prefabs/GraphHour.tscn" id="2_1u78g"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphHour.cs" id="3_i1ega"]
+[ext_resource type="PackedScene" uid="uid://du45e425p27rp" path="res://Source/Prefabs/GraphItem.tscn" id="5_dywsh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mf8o"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
@@ -115,29 +116,33 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8mf8o")
 metadata/_edit_lock_ = true
 
-[node name="Lines" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(48, 0)
+[node name="Margin" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 44.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_bottom = 45
+
+[node name="Lines" type="VBoxContainer" parent="Margin"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
 alignment = 2
 script = ExtResource("1_r84ld")
 LineWidth = 2
 LineColor = Color(0.154876, 0.154876, 0.154876, 1)
 metadata/_edit_lock_ = true
 
-[node name="Margin" type="Control" parent="Lines"]
+[node name="Margin" type="Control" parent="Margin/Lines"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="1" type="Control" parent="Lines"]
+[node name="1" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/1"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/1"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -147,11 +152,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="2" type="Control" parent="Lines"]
+[node name="2" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/2"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/2"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -161,11 +166,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="3" type="Control" parent="Lines"]
+[node name="3" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/3"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/3"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -175,11 +180,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="4" type="Control" parent="Lines"]
+[node name="4" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/4"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/4"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -189,11 +194,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="5" type="Control" parent="Lines"]
+[node name="5" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/5"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/5"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -203,11 +208,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="6" type="Control" parent="Lines"]
+[node name="6" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/6"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/6"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -217,11 +222,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="7" type="Control" parent="Lines"]
+[node name="7" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/7"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/7"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -231,11 +236,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="8" type="Control" parent="Lines"]
+[node name="8" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/8"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/8"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -245,11 +250,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="9" type="Control" parent="Lines"]
+[node name="9" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/9"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/9"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -259,11 +264,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="10" type="Control" parent="Lines"]
+[node name="10" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/10"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/10"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -273,11 +278,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="11" type="Control" parent="Lines"]
+[node name="11" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/11"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/11"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -287,11 +292,11 @@ offset_bottom = 2.0
 grow_horizontal = 2
 color = Color(0.154876, 0.154876, 0.154876, 1)
 
-[node name="12" type="Control" parent="Lines"]
+[node name="12" type="Control" parent="Margin/Lines"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Line" type="ColorRect" parent="Lines/12"]
+[node name="Line" type="ColorRect" parent="Margin/Lines/12"]
 z_index = -6
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -735,75 +740,38 @@ layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 1
 
+[node name="MarginB" type="Control" parent="HUD/Main/Graph/Vert"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
 [node name="Scroll" type="ScrollContainer" parent="HUD/Main/Graph"]
 layout_mode = 2
 size_flags_horizontal = 3
 vertical_scroll_mode = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD/Main/Graph/Scroll"]
+[node name="Margin" type="MarginContainer" parent="HUD/Main/Graph/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 28
-theme_override_constants/margin_bottom = 10
 
-[node name="Box" type="HBoxContainer" parent="HUD/Main/Graph/Scroll/MarginContainer"]
+[node name="Items" type="VBoxContainer" parent="HUD/Main/Graph/Scroll/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Box" type="HBoxContainer" parent="HUD/Main/Graph/Scroll/Margin/Items"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 30
 
-[node name="0" type="Control" parent="HUD/Main/Graph/Scroll/MarginContainer/Box"]
-visible = false
-custom_minimum_size = Vector2(80, 0)
+[node name="0" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Main/Graph/Scroll/MarginContainer/Box"]
+[node name="MarginB" type="Control" parent="HUD/Main/Graph/Scroll/Margin/Items"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-alignment = 2
-
-[node name="Remainder" type="Control" parent="HUD/Main/Graph/Scroll/MarginContainer/Box/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.0
-
-[node name="Panel" type="Panel" parent="HUD/Main/Graph/Scroll/MarginContainer/Box/VBoxContainer"]
-material = SubResource("ShaderMaterial_c6oo3")
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_c1gv8")
-
-[node name="Shadow" type="Panel" parent="HUD/Main/Graph/Scroll/MarginContainer/Box/VBoxContainer/Panel"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -2.0
-offset_top = -2.0
-offset_right = 2.0
-offset_bottom = 2.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_srlat")
 metadata/_edit_lock_ = true
-
-[node name="Label" type="Label" parent="HUD/Main/Graph/Scroll/MarginContainer/Box/VBoxContainer/Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -17.0
-offset_top = -24.0
-offset_right = 17.0
-offset_bottom = -1.0
-grow_horizontal = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.152941)
-theme_override_fonts/font = SubResource("SystemFont_m0cc0")
-theme_override_font_sizes/font_size = 13
-text = "6h05"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Outline" type="Panel" parent="."]
 visible = false

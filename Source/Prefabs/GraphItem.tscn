@@ -1,0 +1,212 @@
+[gd_scene load_steps=8 format=3 uid="uid://du45e425p27rp"]
+
+[sub_resource type="Shader" id="Shader_ynkj0"]
+code = "shader_type canvas_item;
+
+uniform vec3 color1 : source_color;
+uniform vec3 color2 : source_color;
+uniform vec3 color3 : source_color;
+
+uniform bool use_middle_color;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	if (use_middle_color) {
+		if (UV.y <= 0.5) {
+			float v = UV.y * 2.0;
+			COLOR.rgb = mix(color1, color2, pow(v, 0.95));
+		} else {
+			float v = (UV.y - 0.5) * 2.0;
+			
+			COLOR.rgb = mix(color2, color3, pow(v, 0.85));
+		}
+	} else {
+		float v = UV.y;
+		COLOR.rgb = mix(color1, color3, pow(v, 1.0));
+	}
+	
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6oo3"]
+shader = SubResource("Shader_ynkj0")
+shader_parameter/color1 = Color(1, 0.211765, 0.52549, 1)
+shader_parameter/color2 = Color(0.944415, 0.935932, 0.919448, 1)
+shader_parameter/color3 = Color(0.996078, 0.384314, 0.345098, 1)
+shader_parameter/use_middle_color = null
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1gv8"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srlat"]
+bg_color = Color(0.442911, 0.442911, 0.442911, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.156863)
+shadow_size = 3
+
+[sub_resource type="SystemFont" id="SystemFont_m0cc0"]
+font_names = PackedStringArray("Bahnschrift")
+font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_l0ut6"]
+font_names = PackedStringArray("Bahnschrift")
+font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_weel8"]
+font_names = PackedStringArray("Bahnschrift")
+font_weight = 700
+subpixel_positioning = 0
+
+[node name="0" type="VBoxContainer"]
+alignment = 2
+
+[node name="Remainder" type="Control" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.15
+
+[node name="Panel" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_c6oo3")
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_c1gv8")
+
+[node name="Shadow" type="Panel" parent="Panel"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_srlat")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -17.0
+offset_top = -24.0
+offset_right = 17.0
+offset_bottom = -1.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.152941)
+theme_override_fonts/font = SubResource("SystemFont_m0cc0")
+theme_override_font_sizes/font_size = 13
+text = "6h05"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Info" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Weekday" type="Label" parent="Panel/Info"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = 24.0
+offset_right = 10.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.160784)
+theme_override_fonts/font = SubResource("SystemFont_l0ut6")
+theme_override_font_sizes/font_size = 12
+text = "SAT"
+horizontal_alignment = 1
+
+[node name="Date" type="HBoxContainer" parent="Panel/Info"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 35.0
+offset_right = 54.0
+offset_bottom = 75.0
+theme_override_constants/separation = 1
+
+[node name="Day" type="Label" parent="Panel/Info/Date"]
+self_modulate = Color(0.851769, 0.851769, 0.851769, 1)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.164706)
+theme_override_fonts/font = SubResource("SystemFont_weel8")
+theme_override_font_sizes/font_size = 12
+text = "09"
+horizontal_alignment = 1
+
+[node name="Slash1" type="Label" parent="Panel/Info/Date"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.164706)
+theme_override_fonts/font = SubResource("SystemFont_weel8")
+theme_override_font_sizes/font_size = 12
+text = "/"
+horizontal_alignment = 1
+
+[node name="Month" type="Label" parent="Panel/Info/Date"]
+self_modulate = Color(0.851769, 0.851769, 0.851769, 1)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.164706)
+theme_override_fonts/font = SubResource("SystemFont_weel8")
+theme_override_font_sizes/font_size = 12
+text = "12"
+horizontal_alignment = 1
+
+[node name="Slash2" type="Label" parent="Panel/Info/Date"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.164706)
+theme_override_fonts/font = SubResource("SystemFont_weel8")
+theme_override_font_sizes/font_size = 12
+text = "/"
+horizontal_alignment = 1
+
+[node name="Year" type="Label" parent="Panel/Info/Date"]
+self_modulate = Color(0.851769, 0.851769, 0.851769, 1)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.164706)
+theme_override_fonts/font = SubResource("SystemFont_weel8")
+theme_override_font_sizes/font_size = 12
+text = "2024"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
