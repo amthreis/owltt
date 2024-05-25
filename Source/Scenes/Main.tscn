@@ -1,0 +1,520 @@
+[gd_scene load_steps=13 format=3 uid="uid://csjndwc4wtdud"]
+
+[ext_resource type="Texture2D" uid="uid://dn447rd515u2c" path="res://Source/Textures/Logo.svg" id="1_505f1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mf8o"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8qdxj"]
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0.184314, 0.184314, 0.184314, 1)
+shadow_color = Color(0, 0, 0, 0.172549)
+shadow_size = 3
+
+[sub_resource type="SystemFont" id="SystemFont_0jv2t"]
+
+[sub_resource type="SystemFont" id="SystemFont_ff0lq"]
+font_names = PackedStringArray("Bahnschrift")
+font_weight = 900
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pllcm"]
+draw_center = false
+border_width_top = 2
+border_color = Color(0.184314, 0.184314, 0.184314, 1)
+shadow_color = Color(0, 0, 0, 0.172549)
+shadow_size = 3
+
+[sub_resource type="Shader" id="Shader_ynkj0"]
+code = "shader_type canvas_item;
+
+uniform vec3 color1 : source_color;
+uniform vec3 color2 : source_color;
+uniform vec3 color3 : source_color;
+
+uniform bool use_middle_color;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	if (use_middle_color) {
+		if (UV.y <= 0.5) {
+			float v = UV.y * 2.0;
+			COLOR.rgb = mix(color1, color2, pow(v, 0.95));
+		} else {
+			float v = (UV.y - 0.5) * 2.0;
+			
+			COLOR.rgb = mix(color2, color3, pow(v, 0.85));
+		}
+	} else {
+		float v = UV.y;
+		COLOR.rgb = mix(color1, color3, pow(v, 1.0));
+	}
+	
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6oo3"]
+shader = SubResource("Shader_ynkj0")
+shader_parameter/color1 = Color(1, 0.211765, 0.52549, 1)
+shader_parameter/color2 = Color(0.944415, 0.935932, 0.919448, 1)
+shader_parameter/color3 = Color(0.996078, 0.384314, 0.345098, 1)
+shader_parameter/use_middle_color = null
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1gv8"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srlat"]
+bg_color = Color(0.442911, 0.442911, 0.442911, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.156863)
+shadow_size = 3
+
+[sub_resource type="SystemFont" id="SystemFont_m0cc0"]
+font_names = PackedStringArray("Bahnschrift")
+font_weight = 900
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_asjf1"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.184314, 0.184314, 0.184314, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="Node" type="Node"]
+
+[node name="BG" type="Panel" parent="."]
+z_index = -10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8mf8o")
+metadata/_edit_lock_ = true
+
+[node name="HUD" type="VBoxContainer" parent="."]
+self_modulate = Color(0.12549, 0.12549, 0.12549, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+metadata/_edit_lock_ = true
+
+[node name="TopBar" type="Panel" parent="HUD"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8qdxj")
+
+[node name="Label" type="Label" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -10.5
+offset_right = 39.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "File"
+
+[node name="Logo" type="TextureRect" parent="HUD/TopBar"]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -13.5
+offset_right = 42.0
+offset_bottom = 11.5
+grow_vertical = 2
+texture = ExtResource("1_505f1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Score" type="TextureProgressBar" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -94.0
+offset_top = -14.5
+offset_right = -68.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+step = 5.0
+value = 90.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("1_505f1")
+texture_progress = ExtResource("1_505f1")
+tint_under = Color(0.244776, 0.244776, 0.244776, 1)
+tint_progress = Color(0.694965, 0.960152, 0.99149, 1)
+
+[node name="Title" type="Label" parent="HUD/TopBar/Score"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -11.0
+offset_right = -30.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_0jv2t")
+theme_override_font_sizes/font_size = 13
+text = "score"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="HUD/TopBar/Score"]
+self_modulate = Color(0.694118, 0.960784, 0.992157, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 31.0
+offset_top = -9.5
+offset_right = 69.0
+offset_bottom = 9.5
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_ff0lq")
+theme_override_font_sizes/font_size = 18
+text = "100%"
+
+[node name="Time" type="HBoxContainer" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -469.0
+offset_top = -9.0
+offset_right = -150.0
+offset_bottom = 10.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 28
+
+[node name="Total" type="HBoxContainer" parent="HUD/TopBar/Time"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Value" type="Label" parent="HUD/TopBar/Time/Total"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_fonts/font = SubResource("SystemFont_ff0lq")
+theme_override_font_sizes/font_size = 16
+text = "188h03"
+horizontal_alignment = 2
+
+[node name="Title" type="Label" parent="HUD/TopBar/Time/Total"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_fonts/font = SubResource("SystemFont_0jv2t")
+theme_override_font_sizes/font_size = 13
+text = "total"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ThisWeek" type="HBoxContainer" parent="HUD/TopBar/Time"]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Value" type="Label" parent="HUD/TopBar/Time/ThisWeek"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+custom_minimum_size = Vector2(54, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_fonts/font = SubResource("SystemFont_ff0lq")
+theme_override_font_sizes/font_size = 16
+text = "188h03"
+horizontal_alignment = 2
+
+[node name="Title" type="Label" parent="HUD/TopBar/Time/ThisWeek"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_fonts/font = SubResource("SystemFont_0jv2t")
+theme_override_font_sizes/font_size = 13
+text = "this week"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Today" type="HBoxContainer" parent="HUD/TopBar/Time"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Value" type="Label" parent="HUD/TopBar/Time/Today"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+custom_minimum_size = Vector2(54, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_fonts/font = SubResource("SystemFont_ff0lq")
+theme_override_font_sizes/font_size = 16
+text = "188h03"
+horizontal_alignment = 2
+
+[node name="Title" type="Label" parent="HUD/TopBar/Time/Today"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_fonts/font = SubResource("SystemFont_0jv2t")
+theme_override_font_sizes/font_size = 13
+text = "today"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BottomBar" type="Panel" parent="HUD"]
+visible = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pllcm")
+
+[node name="Logo" type="TextureRect" parent="HUD/BottomBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -13.5
+offset_right = 42.0
+offset_bottom = 11.5
+grow_vertical = 2
+texture = ExtResource("1_505f1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HUD/BottomBar/Logo"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 31.0
+offset_top = -9.5
+offset_right = 373.0
+offset_bottom = 8.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "C:/Users/Matheus/Documents/dev - Taskeru"
+
+[node name="ProgressBar" type="TextureProgressBar" parent="HUD/BottomBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -94.0
+offset_top = -13.0
+offset_right = -68.0
+offset_bottom = 13.0
+grow_horizontal = 0
+grow_vertical = 2
+step = 5.0
+value = 90.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("1_505f1")
+texture_progress = ExtResource("1_505f1")
+tint_under = Color(0.244776, 0.244776, 0.244776, 1)
+tint_progress = Color(0.694965, 0.960152, 0.99149, 1)
+
+[node name="Label" type="Label" parent="HUD/BottomBar/ProgressBar"]
+self_modulate = Color(0.694118, 0.960784, 0.992157, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 31.0
+offset_top = -9.0
+offset_right = 58.0
+offset_bottom = 9.0
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_ff0lq")
+theme_override_font_sizes/font_size = 18
+text = "100%"
+
+[node name="Label2" type="Label" parent="HUD/BottomBar/ProgressBar"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -11.0
+offset_right = -30.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_0jv2t")
+theme_override_font_sizes/font_size = 13
+text = "score"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="HUD"]
+visible = false
+material = SubResource("ShaderMaterial_c6oo3")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c1gv8")
+
+[node name="Shadow" type="Panel" parent="HUD/Panel"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_srlat")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="HUD/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -17.0
+offset_top = -24.0
+offset_right = 17.0
+offset_bottom = -1.0
+grow_horizontal = 2
+theme_override_fonts/font = SubResource("SystemFont_m0cc0")
+theme_override_font_sizes/font_size = 13
+text = "6h05"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel2" type="Panel" parent="HUD"]
+visible = false
+material = SubResource("ShaderMaterial_c6oo3")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c1gv8")
+
+[node name="Shadow" type="Panel" parent="HUD/Panel2"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_srlat")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="HUD/Panel2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -17.0
+offset_top = -23.0
+offset_right = 17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_m0cc0")
+theme_override_font_sizes/font_size = 13
+text = "6h05"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel3" type="Panel" parent="HUD"]
+visible = false
+material = SubResource("ShaderMaterial_c6oo3")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c1gv8")
+
+[node name="Shadow" type="Panel" parent="HUD/Panel3"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_srlat")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="HUD/Panel3"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -17.0
+offset_top = -23.0
+offset_right = 17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_m0cc0")
+theme_override_font_sizes/font_size = 13
+text = "6h05"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HUD"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Outline" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_asjf1")
+metadata/_edit_lock_ = true
