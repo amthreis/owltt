@@ -13,7 +13,7 @@ corner_radius_top_left = 32
 corner_radius_top_right = 32
 corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
-shadow_color = Color(0, 0, 0, 0.101961)
+shadow_color = Color(0, 0, 0, 0.0745098)
 shadow_size = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7qyl"]
@@ -26,6 +26,7 @@ corner_radius_bottom_left = 16
 [sub_resource type="SystemFont" id="SystemFont_cuq4l"]
 font_names = PackedStringArray("Bahnschrift")
 font_weight = 500
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubjxx"]
 

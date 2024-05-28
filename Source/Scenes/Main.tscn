@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://csjndwc4wtdud"]
+[gd_scene load_steps=51 format=3 uid="uid://csjndwc4wtdud"]
 
 [ext_resource type="Texture2D" uid="uid://dn447rd515u2c" path="res://Source/Textures/Logo.svg" id="1_505f1"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphLines.cs" id="1_r84ld"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Code/UI/UIGraphItem.cs" id="6_7t8ki"]
 [ext_resource type="Texture2D" uid="uid://cycky6uaw4dny" path="res://Source/Textures/Stopwatch.png" id="7_n08x4"]
 [ext_resource type="Theme" uid="uid://cl77pq13m5a48" path="res://Source/MainTheme.tres" id="8_yppef"]
+[ext_resource type="Script" path="res://Code/UI/UIToggleTimer.cs" id="9_87fqq"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphScrollBar.cs" id="10_3nrrs"]
 [ext_resource type="PackedScene" uid="uid://41kd3k5usml8" path="res://Source/Prefabs/TimerWindow.tscn" id="15_8vdil"]
 
@@ -25,19 +26,6 @@ border_width_bottom = 2
 border_color = Color(0.184314, 0.184314, 0.184314, 1)
 shadow_color = Color(0, 0, 0, 0.172549)
 shadow_size = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nojwl"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
-[sub_resource type="SystemFont" id="SystemFont_ff0lq"]
-font_names = PackedStringArray("Bahnschrift")
-font_weight = 900
-
-[sub_resource type="SystemFont" id="SystemFont_0jv2t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36eer"]
 content_margin_left = 10.0
@@ -60,6 +48,21 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrcip"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nojwl"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="SystemFont" id="SystemFont_ff0lq"]
+font_names = PackedStringArray("Bahnschrift")
+font_weight = 900
+
+[sub_resource type="SystemFont" id="SystemFont_0jv2t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h3m43"]
 content_margin_left = 10.0
@@ -100,14 +103,14 @@ void fragment() {
 			COLOR.rgb = mix(color1, color2, pow(v, 0.95));
 		} else {
 			float v = (UV.y - 0.5) * 2.0;
-			
+
 			COLOR.rgb = mix(color2, color3, pow(v, 0.85));
 		}
 	} else {
 		float v = UV.y;
 		COLOR.rgb = mix(color1, color3, pow(v, 1.0));
 	}
-	
+
 }
 
 //void light() {
@@ -213,8 +216,6 @@ border_color = Color(0.184314, 0.184314, 0.184314, 1)
 shadow_color = Color(0, 0, 0, 0.156863)
 shadow_size = 3
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrcip"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atnas"]
 content_margin_left = 12.0
 content_margin_right = 12.0
@@ -285,10 +286,11 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Node" type="Node" node_paths=PackedStringArray("linesCtr", "hoursCtr")]
+[node name="Node" type="Node" node_paths=PackedStringArray("linesCtr", "hoursCtr", "UIScore")]
 script = ExtResource("1_wlvfh")
 linesCtr = NodePath("Margin/Lines")
 hoursCtr = NodePath("HUD/HBoxContainer/Main/Graph/Hours")
+UIScore = NodePath("HUD/TopBar/Score")
 
 [node name="BG" type="Panel" parent="."]
 z_index = -10
@@ -380,42 +382,78 @@ custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8qdxj")
 
-[node name="Menu" type="HBoxContainer" parent="HUD/TopBar"]
+[node name="ToggleMenu" type="Button" parent="HUD/TopBar"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 17.0
-offset_top = -9.0
-offset_right = 31.0
-offset_bottom = 9.0
+offset_left = 10.0
+offset_top = -13.5
+offset_right = 38.0
+offset_bottom = 13.5
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_36eer")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n5pug")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hrcip")
+
+[node name="Menu" type="HBoxContainer" parent="HUD/TopBar/ToggleMenu"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -10.0
+offset_right = 21.0
+offset_bottom = 8.0
 grow_vertical = 2
 
-[node name="Icon" type="VBoxContainer" parent="HUD/TopBar/Menu"]
+[node name="Icon" type="VBoxContainer" parent="HUD/TopBar/ToggleMenu/Menu"]
 modulate = Color(0.843137, 0.843137, 0.843137, 1)
 layout_mode = 2
 alignment = 1
 
-[node name="0" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+[node name="0" type="Panel" parent="HUD/TopBar/ToggleMenu/Menu/Icon"]
 custom_minimum_size = Vector2(14, 2)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
 
-[node name="1" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+[node name="1" type="Panel" parent="HUD/TopBar/ToggleMenu/Menu/Icon"]
 custom_minimum_size = Vector2(14, 2)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
 
-[node name="2" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+[node name="2" type="Panel" parent="HUD/TopBar/ToggleMenu/Menu/Icon"]
 custom_minimum_size = Vector2(14, 2)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
 
-[node name="Title" type="Label" parent="HUD/TopBar/Menu"]
+[node name="Title" type="Label" parent="HUD/TopBar/ToggleMenu/Menu"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Menu"
+
+[node name="Title" type="Label" parent="HUD/TopBar/ToggleMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -12.0
+offset_right = 5.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "×"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="Logo" type="TextureRect" parent="HUD/TopBar"]
 visible = false
@@ -600,7 +638,7 @@ grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("7_n08x4")
 
-[node name="Timer" type="Button" parent="HUD/TopBar"]
+[node name="Timer" type="Button" parent="HUD/TopBar" node_paths=PackedStringArray("TimerWindow")]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -622,6 +660,8 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_h3m43")
 text = "Timer"
 icon = ExtResource("7_n08x4")
 expand_icon = true
+script = ExtResource("9_87fqq")
+TimerWindow = NodePath("../../../Window")
 
 [node name="BottomBar" type="Panel" parent="HUD"]
 visible = false
@@ -1603,5 +1643,12 @@ popup/item_4/text = "1h"
 popup/item_4/id = 4
 
 [node name="Window" parent="." instance=ExtResource("15_8vdil")]
+visible = false
+
+[node name="FileDialog" type="FileDialog" parent="."]
+position = Vector2i(200, 85)
+size = Vector2i(752, 457)
+access = 2
+use_native_dialog = true
 
 [editable path="HUD/HBoxContainer/Main/Graph/Hours/6"]

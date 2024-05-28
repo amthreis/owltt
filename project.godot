@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.3", "C#", "Mobile")
 run/max_fps=60
 config/icon="res://Source/Textures/Logo.svg"
 
+[autoload]
+
+GlobalInput="*res://addons/global_input/autoloads/global_input_gdscript/GlobalInputGDScript.tscn"
+
 [display]
 
 window/size/viewport_width=800
@@ -25,6 +29,21 @@ window/subwindows/embed_subwindows=false
 [dotnet]
 
 project/assembly_name="Task"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/global_input/plugin.cfg")
+
+[input]
+
+Any={
+"deadzone": 0.5,
+"events": []
+}
+
+[physics]
+
+common/physics_ticks_per_second=5
 
 [rendering]
 

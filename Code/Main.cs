@@ -1,14 +1,21 @@
 ﻿using Godot;
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Task
 {
-    [Tool]
     public partial class Main : Node
     {
+        GlobalInputCSharp globalInput;
+
         public override void _Ready()
         {
             Settings = new MainSettings(this);
             Data = new MainData();
+
+            globalInput = GetNode<GlobalInputCSharp>("/root/GlobalInput/GlobalInputCSharp");
+
         }
 
         public MainSettings Settings { get; private set; }
@@ -29,21 +36,38 @@ namespace Task
         //    }
         //}
 
-        public override void _Process(double dT)
+        Vector2 lastMousePos;
+
+        public override void _PhysicsProcess(double dT)
         {
+            var mousePos = globalInput.GetMousePosition();
+
+            if (mousePos != lastMousePos)
+            {
+                Data.InactivityTimer = 0f;
+            }
+
+            lastMousePos = mousePos;
+
             Data.InactivityTimer += (float)dT;
 
             GD.Print(Mathf.Floor(Data.InactivityTimer));
-        }
-
-        public override void _Input(InputEvent ev)
-        {
-            Data.InactivityTimer = 0f;
+            //GD.Print(anything);
         }
 
         [Export] VBoxContainer linesCtr;
         [Export] VBoxContainer hoursCtr;
         [Export] public UIScore UIScore;
+
+        public override void _Input(InputEvent ev)
+        {
+            if (ev.IsActionPressed("ui_up"))
+            {
+                GetNode("FileDialog").Set("file_mode", 0);
+                GetNode("FileDialog").Call("set_filters", new string[] { "*.tsk ; Taskeru Files" });
+                GetNode("FileDialog").Call("show");
+            }
+        }
 
         public void UpdateHoursAndLines()
         {
@@ -67,6 +91,49 @@ namespace Task
         public void SetScore(float score)
         {
             UIScore.SetValue(score);
+        }
+
+        public static void Serialize(object o, string path, Action callback = null)
+        {
+            var lastSlash = path.LastIndexOf('/');
+            var substr = path.Substring(0, lastSlash);
+            var _f = FileAccess.Open(path, FileAccess.ModeFlags.Write);
+            var data = JsonConvert.SerializeObject(o, Formatting.Indented,
+                        new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                            Converters = { new StringEnumConverter() },
+                            TypeNameHandling = TypeNameHandling.Auto,
+                            MissingMemberHandling = MissingMemberHandling.Ignore
+                        });
+
+            _f.StoreString(data);
+
+            _f.Close();
+            callback?.Invoke();
+        }
+
+        public static T Deserialize<T>(string path)
+        {
+            if (!FileAccess.FileExists(path))
+            {
+                throw new Exception($"The file to deserialize couldn't be found. Path: {path}");
+            }
+
+            var _f = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+            var data = FileAccess.GetFileAsString(path);
+
+            _f.Close();
+
+            return JsonConvert.DeserializeObject<T>(data,
+                        new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                            Converters = { new StringEnumConverter() },
+                            TypeNameHandling = TypeNameHandling.Auto,
+                            MissingMemberHandling = MissingMemberHandling.Ignore,
+                            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+                        });
         }
     }
 }
