@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://du45e425p27rp"]
+[gd_scene load_steps=9 format=3 uid="uid://du45e425p27rp"]
+
+[ext_resource type="Script" path="res://Code/UI/UIGraphItem.cs" id="1_y70ci"]
 
 [sub_resource type="Shader" id="Shader_ynkj0"]
 code = "shader_type canvas_item;
@@ -76,6 +78,7 @@ subpixel_positioning = 0
 
 [node name="0" type="VBoxContainer"]
 alignment = 2
+script = ExtResource("1_y70ci")
 
 [node name="Remainder" type="Control" parent="."]
 layout_mode = 2
@@ -104,7 +107,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_srlat")
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="Hours" type="Label" parent="Panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -152,6 +155,7 @@ theme_override_fonts/font = SubResource("SystemFont_l0ut6")
 theme_override_font_sizes/font_size = 12
 text = "SAT"
 horizontal_alignment = 1
+uppercase = true
 
 [node name="Date" type="HBoxContainer" parent="Panel/Info"]
 layout_mode = 0

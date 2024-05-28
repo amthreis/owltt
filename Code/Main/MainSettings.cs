@@ -10,7 +10,7 @@ namespace Task
     {
         Main m;
 
-        public MainSettings(Main m )
+        public MainSettings(Main m)
         {
             this.m = m;
         }

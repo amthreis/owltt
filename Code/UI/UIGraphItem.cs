@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Task
 {
-    [Tool]
+    //[Tool]
     public partial class UIGraphItem : VBoxContainer
     {
         float _value;
@@ -22,6 +22,36 @@ namespace Task
                 GetNode<Control>("Remainder").SizeFlagsStretchRatio = 1f - _value;
                 GetNode<Panel>("Panel").SizeFlagsStretchRatio = _value;
             }
+        }
+
+        public void SetDTS(Main m, DateTime day, TimeSpan time)
+        {
+            var date = day.ToString("dd/MM/yyyy").Split("/");// $"{}\n({day.DayOfWeek.ToString()[0..3]})".Split();
+
+            GetNode<Label>("Panel/Info/Weekday").Text = day.DayOfWeek.ToString()[0..3];
+
+            var dateCt = GetNode("Panel/Info/Date");
+
+            dateCt.GetNode<Label>("Day").Text = date[0];
+            dateCt.GetNode<Label>("Month").Text = date[1];
+            dateCt.GetNode<Label>("Year").Text = date[2];
+
+            GetNode<Label>("Panel/Hours").Text = $"{time.ToString(@"h\hmm")}";
+
+            //GetNode<Label>("Box/Content/Bar/Bar/Value").Text = $"{time.ToString(@"h\hmm")}";
+
+            //MaxTime.ra
+
+            var isWeekend = day.DayOfWeek == DayOfWeek.Sunday || day.DayOfWeek == DayOfWeek.Saturday;
+
+            var timeRatio = (float)(time / TimeSpan.FromHours(m.Settings.TargetHours));
+
+            GetNode<Control>("Panel").SizeFlagsStretchRatio = timeRatio;
+            GetNode<Control>("Remainder").SizeFlagsStretchRatio = 1f - timeRatio;
+
+            //GetNode<Control>("Box/Content/Bar/Bar").SelfModulate = new Color(isWeekend ? "837f89" : "856aad");
+
+            // GetNode<Control>("Box/Content/Bar/Bar").SelfModulate = tasker.GetScoreColor(tasker.GetDayScore(day));
         }
     }
 }
