@@ -20,6 +20,7 @@ config/icon="res://Source/Textures/Logo.svg"
 
 window/size/viewport_width=800
 window/size/viewport_height=450
+window/subwindows/embed_subwindows=false
 
 [dotnet]
 

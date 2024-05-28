@@ -1,0 +1,132 @@
+[gd_scene load_steps=7 format=3 uid="uid://41kd3k5usml8"]
+
+[ext_resource type="Texture2D" uid="uid://qbdthy4xn86c" path="res://Source/Textures/MoveArrow3.png" id="1_hlr7t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u0ykl"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+border_color = Color(0.442911, 0.442911, 0.442911, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+shadow_color = Color(0, 0, 0, 0.101961)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7qyl"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="SystemFont" id="SystemFont_cuq4l"]
+font_names = PackedStringArray("Bahnschrift")
+font_weight = 500
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubjxx"]
+
+[sub_resource type="GDScript" id="GDScript_nciuq"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+var drag:= false
+var drag_pos:= Vector2()
+
+func _gui_input(ev):
+	
+	if ev is InputEventMouseButton:
+		if ev.pressed:
+			drag = true
+			drag_pos = ev.position
+			
+		if drag && !ev.pressed:
+			drag = false
+	
+	if ev is InputEventMouseMotion && drag:
+		get_window().position += (Vector2i)(ev.position - drag_pos)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="Window" type="Window"]
+auto_translate_mode = 1
+transparent_bg = true
+initial_position = 1
+size = Vector2i(164, 64)
+exclusive = true
+borderless = true
+always_on_top = true
+transparent = true
+
+[node name="TimerWindow" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Panel" type="PanelContainer" parent="TimerWindow"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u0ykl")
+
+[node name="Box" type="HBoxContainer" parent="TimerWindow/Panel"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="TimerWindow/Panel/Box"]
+self_modulate = Color(0.215686, 0.407843, 0.270588, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_o7qyl")
+
+[node name="Label" type="Label" parent="TimerWindow/Panel/Box/Panel"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 94.0
+offset_bottom = 23.0
+theme_override_fonts/font = SubResource("SystemFont_cuq4l")
+theme_override_font_sizes/font_size = 18
+text = "04:11:54"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Drag" type="Button" parent="TimerWindow/Panel/Box"]
+self_modulate = Color(0.17, 0.17, 0.17, 1)
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 0
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ubjxx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ubjxx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ubjxx")
+icon = ExtResource("1_hlr7t")
+icon_alignment = 1
+expand_icon = true
+script = SubResource("GDScript_nciuq")
+
+[node name="Icon" type="TextureRect" parent="TimerWindow/Panel/Box/Drag"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+layout_mode = 0
+offset_left = 3.77
+offset_top = 3.95
+offset_right = 21.77
+offset_bottom = 21.95
+texture = ExtResource("1_hlr7t")
+expand_mode = 1
+stretch_mode = 5

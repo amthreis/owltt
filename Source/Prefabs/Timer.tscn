@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://b40hj78mmi6y8"]
+
+[ext_resource type="Texture2D" uid="uid://qbdthy4xn86c" path="res://Source/Textures/MoveArrow3.png" id="1_418uc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ufy8"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.442911, 0.442911, 0.442911, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+shadow_color = Color(0, 0, 0, 0.156863)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xc4mf"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubjxx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6ts1"]
+
+[sub_resource type="GDScript" id="GDScript_nciuq"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+var drag:= false
+var drag_pos:= Vector2()
+
+func _gui_input(ev):
+	
+	if ev is InputEventMouseButton:
+		if ev.pressed:
+			drag = true
+			drag_pos = ev.position
+			
+		if drag && !ev.pressed:
+			drag = false
+	
+	if ev is InputEventMouseMotion && drag:
+		get_window().position += (Vector2i)(ev.position - drag_pos)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="TimerWindow" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3ufy8")
+
+[node name="Box" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Panel" type="PanelContainer" parent="Panel/Box"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_xc4mf")
+
+[node name="Drag" type="Button" parent="Panel/Box"]
+self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 0
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ubjxx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ubjxx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_c6ts1")
+icon = ExtResource("1_418uc")
+expand_icon = true
+script = SubResource("GDScript_nciuq")

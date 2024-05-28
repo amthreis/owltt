@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Task
 {
-    [Tool]
+    //[Tool]
     public partial class UIGraphLines : VBoxContainer
     {
         int _lineWidth;

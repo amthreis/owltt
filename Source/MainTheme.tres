@@ -1,0 +1,38 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://cl77pq13m5a48"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljudl"]
+bg_color = Color(0.205117, 0.205117, 0.205117, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5sit"]
+bg_color = Color(0.442911, 0.442911, 0.442911, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hv3g"]
+bg_color = Color(0.843184, 0.843184, 0.843184, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esp7k"]
+content_margin_top = 5.0
+bg_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
+draw_center = false
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[resource]
+HScrollBar/styles/grabber = SubResource("StyleBoxFlat_ljudl")
+HScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_g5sit")
+HScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_6hv3g")
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_esp7k")
+HScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_esp7k")

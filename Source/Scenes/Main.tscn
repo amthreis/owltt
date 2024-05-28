@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://csjndwc4wtdud"]
+[gd_scene load_steps=50 format=3 uid="uid://csjndwc4wtdud"]
 
 [ext_resource type="Texture2D" uid="uid://dn447rd515u2c" path="res://Source/Textures/Logo.svg" id="1_505f1"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphLines.cs" id="1_r84ld"]
@@ -7,8 +7,14 @@
 [ext_resource type="Script" path="res://Code/UI/UIGraphHour.cs" id="3_i1ega"]
 [ext_resource type="PackedScene" uid="uid://t21k77jgn7g0" path="res://Source/Prefabs/GraphLine.tscn" id="3_mlqkm"]
 [ext_resource type="PackedScene" uid="uid://du45e425p27rp" path="res://Source/Prefabs/GraphItem.tscn" id="5_dywsh"]
+[ext_resource type="Script" path="res://Code/UI/UIScore.cs" id="5_h8d60"]
+[ext_resource type="Script" path="res://Code/UI/UITime.cs" id="5_u8fyq"]
+[ext_resource type="Gradient" uid="uid://cu52wsih8yd8u" path="res://Source/Stuff/ColorGrad.tres" id="6_0l0hp"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphItem.cs" id="6_7t8ki"]
 [ext_resource type="Texture2D" uid="uid://cycky6uaw4dny" path="res://Source/Textures/Stopwatch.png" id="7_n08x4"]
+[ext_resource type="Theme" uid="uid://cl77pq13m5a48" path="res://Source/MainTheme.tres" id="8_yppef"]
+[ext_resource type="Script" path="res://Code/UI/UIGraphScrollBar.cs" id="10_3nrrs"]
+[ext_resource type="PackedScene" uid="uid://41kd3k5usml8" path="res://Source/Prefabs/TimerWindow.tscn" id="15_8vdil"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mf8o"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
@@ -19,6 +25,13 @@ border_width_bottom = 2
 border_color = Color(0.184314, 0.184314, 0.184314, 1)
 shadow_color = Color(0, 0, 0, 0.172549)
 shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nojwl"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="SystemFont" id="SystemFont_ff0lq"]
 font_names = PackedStringArray("Bahnschrift")
@@ -32,6 +45,17 @@ content_margin_top = 4.0
 content_margin_right = 10.0
 content_margin_bottom = 4.0
 bg_color = Color(0.169245, 0.169245, 0.169245, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5pug"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.205117, 0.205117, 0.205117, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -119,7 +143,42 @@ shadow_size = 3
 font_names = PackedStringArray("Bahnschrift")
 font_weight = 900
 
-[sub_resource type="Theme" id="Theme_pjlc7"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o3ia8"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+border_width_right = 2
+border_color = Color(0.184314, 0.184314, 0.184314, 1)
+shadow_color = Color(0, 0, 0, 0.156863)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esp7k"]
+content_margin_top = 5.0
+bg_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
+draw_center = false
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljudl"]
+bg_color = Color(0.205117, 0.205117, 0.205117, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5sit"]
+bg_color = Color(0.442911, 0.442911, 0.442911, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hv3g"]
+bg_color = Color(0.843184, 0.843184, 0.843184, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_asjf1"]
 draw_center = false
@@ -133,11 +192,103 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_whuwc"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.184314, 0.184314, 0.184314, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.176471)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sb0r7"]
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0.184314, 0.184314, 0.184314, 1)
+shadow_color = Color(0, 0, 0, 0.156863)
+shadow_size = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrcip"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atnas"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.203922, 0.203922, 0.203922, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_right = 7.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cnlu"]
+bg_color = Color(0.0295066, 0.0295066, 0.0295066, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.184314, 0.184314, 0.184314, 1)
+
+[sub_resource type="Theme" id="Theme_4lpkc"]
+OptionButton/font_sizes/font_size = 12
+OptionButton/styles/normal = SubResource("StyleBoxFlat_atnas")
+PopupMenu/font_sizes/font_size = 12
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_8cnlu")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i6yyj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jv2e1"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_right = 7.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0tyln"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_right = 7.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0fjyy"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="Theme" id="Theme_mjpcs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4sxlk"]
+
+[sub_resource type="Theme" id="Theme_xm0l1"]
+Label/font_sizes/font_size = 12
+LineEdit/font_sizes/font_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pap50"]
+bg_color = Color(0.23, 0.23, 0.23, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [node name="Node" type="Node" node_paths=PackedStringArray("linesCtr", "hoursCtr")]
 script = ExtResource("1_wlvfh")
-TargetHours = 3
 linesCtr = NodePath("Margin/Lines")
-hoursCtr = NodePath("HUD/Main/Graph/Hours")
+hoursCtr = NodePath("HUD/HBoxContainer/Main/Graph/Hours")
 
 [node name="BG" type="Panel" parent="."]
 z_index = -10
@@ -180,31 +331,24 @@ visible = false
 layout_mode = 2
 
 [node name="3" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
-visible = false
 layout_mode = 2
 
 [node name="4" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
-visible = false
 layout_mode = 2
 
 [node name="5" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
-visible = false
 layout_mode = 2
 
 [node name="6" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
-visible = false
 layout_mode = 2
 
 [node name="7" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
-visible = false
 layout_mode = 2
 
 [node name="8" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
-visible = false
 layout_mode = 2
 
 [node name="9" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
-visible = false
 layout_mode = 2
 
 [node name="10" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
@@ -214,6 +358,10 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="12" parent="Margin/Lines" instance=ExtResource("3_mlqkm")]
+layout_mode = 2
+
+[node name="Margin2" type="Control" parent="Margin/Lines"]
+custom_minimum_size = Vector2(0, 13)
 layout_mode = 2
 
 [node name="HUD" type="VBoxContainer" parent="."]
@@ -227,22 +375,47 @@ theme_override_constants/separation = 0
 metadata/_edit_lock_ = true
 
 [node name="TopBar" type="Panel" parent="HUD"]
+z_index = 2
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8qdxj")
 
-[node name="Label" type="Label" parent="HUD/TopBar"]
+[node name="Menu" type="HBoxContainer" parent="HUD/TopBar"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 17.0
-offset_top = -10.5
-offset_right = 39.0
-offset_bottom = 7.5
+offset_top = -9.0
+offset_right = 31.0
+offset_bottom = 9.0
 grow_vertical = 2
+
+[node name="Icon" type="VBoxContainer" parent="HUD/TopBar/Menu"]
+modulate = Color(0.843137, 0.843137, 0.843137, 1)
+layout_mode = 2
+alignment = 1
+
+[node name="0" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+custom_minimum_size = Vector2(14, 2)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
+
+[node name="1" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+custom_minimum_size = Vector2(14, 2)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
+
+[node name="2" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+custom_minimum_size = Vector2(14, 2)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
+
+[node name="Title" type="Label" parent="HUD/TopBar/Menu"]
+visible = false
+layout_mode = 2
 theme_override_font_sizes/font_size = 13
-text = "File"
+text = "Menu"
 
 [node name="Logo" type="TextureRect" parent="HUD/TopBar"]
 visible = false
@@ -273,6 +446,8 @@ offset_bottom = 10.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/separation = 28
+script = ExtResource("5_u8fyq")
+metadata/_edit_group_ = true
 
 [node name="Total" type="HBoxContainer" parent="HUD/TopBar/Time"]
 layout_mode = 2
@@ -280,7 +455,7 @@ theme_override_constants/separation = 4
 
 [node name="Value" type="Label" parent="HUD/TopBar/Time/Total"]
 self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(54, 0)
 layout_mode = 2
 size_flags_horizontal = 5
 theme_override_fonts/font = SubResource("SystemFont_ff0lq")
@@ -360,14 +535,19 @@ offset_right = -150.0
 offset_bottom = 13.0
 grow_horizontal = 0
 grow_vertical = 2
-step = 5.0
-value = 60.0
+max_value = 1.0
+step = 0.01
+value = 1.0
 fill_mode = 4
 nine_patch_stretch = true
 texture_under = ExtResource("1_505f1")
 texture_progress = ExtResource("1_505f1")
 tint_under = Color(0.244776, 0.244776, 0.244776, 1)
-tint_progress = Color(0.984061, 0.914104, 0.505358, 1)
+tint_progress = Color(0.172549, 0.611765, 0.678431, 1)
+script = ExtResource("5_h8d60")
+Score = 0.4
+colorGrad = ExtResource("6_0l0hp")
+metadata/_edit_group_ = true
 
 [node name="Title" type="Label" parent="HUD/TopBar/Score"]
 self_modulate = Color(0.442911, 0.442911, 0.442911, 1)
@@ -390,7 +570,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Value" type="Label" parent="HUD/TopBar/Score"]
-self_modulate = Color(0.984314, 0.913725, 0.505882, 1)
+self_modulate = Color(0.172549, 0.611765, 0.678431, 1)
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -433,9 +613,11 @@ offset_right = -13.0
 offset_bottom = 13.0
 grow_horizontal = 0
 grow_vertical = 2
+focus_mode = 0
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 13
 theme_override_styles/hover = SubResource("StyleBoxFlat_36eer")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n5pug")
 theme_override_styles/normal = SubResource("StyleBoxFlat_h3m43")
 text = "Timer"
 icon = ExtResource("7_n08x4")
@@ -609,179 +791,220 @@ text = "6h05"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Main" type="VBoxContainer" parent="HUD"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftBar" type="Panel" parent="HUD/HBoxContainer"]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o3ia8")
+
+[node name="Main" type="VBoxContainer" parent="HUD/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Graph" type="HBoxContainer" parent="HUD/HBoxContainer/Main"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Graph" type="HBoxContainer" parent="HUD/Main"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Hours" type="VBoxContainer" parent="HUD/Main/Graph"]
+[node name="Hours" type="VBoxContainer" parent="HUD/HBoxContainer/Main/Graph"]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 alignment = 2
 
-[node name="MarginT" type="Control" parent="HUD/Main/Graph/Hours"]
+[node name="MarginT" type="Control" parent="HUD/HBoxContainer/Main/Graph/Hours"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="12x" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+[node name="12x" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 12
 
-[node name="11" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+[node name="11" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 visible = false
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 11
 
-[node name="10" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
-visible = false
+[node name="10" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 10
 
-[node name="9" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
-visible = false
+[node name="9" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 9
 
-[node name="8" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
-visible = false
+[node name="8" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 8
 
-[node name="7" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
-visible = false
+[node name="7" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 7
 
-[node name="6" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
-visible = false
+[node name="6" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 6
 
-[node name="Hour" parent="HUD/Main/Graph/Hours/6" index="0"]
+[node name="Hour" parent="HUD/HBoxContainer/Main/Graph/Hours/6" index="0"]
 text = "6h"
 
-[node name="5" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
-visible = false
+[node name="5" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 5
 
-[node name="4" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
-visible = false
+[node name="4" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 4
 
-[node name="3" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+[node name="3" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 3
 
-[node name="2" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+[node name="2" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 2
 
-[node name="1" parent="HUD/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
+[node name="1" parent="HUD/HBoxContainer/Main/Graph/Hours" instance=ExtResource("2_1u78g")]
 layout_mode = 2
 script = ExtResource("3_i1ega")
 Hour = 1
 
-[node name="MarginB" type="Control" parent="HUD/Main/Graph/Hours"]
-custom_minimum_size = Vector2(0, 45)
+[node name="MarginB" type="Control" parent="HUD/HBoxContainer/Main/Graph/Hours"]
+custom_minimum_size = Vector2(0, 61.855)
 layout_mode = 2
 
-[node name="Scroll" type="ScrollContainer" parent="HUD/Main/Graph"]
+[node name="Box" type="VBoxContainer" parent="HUD/HBoxContainer/Main/Graph"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = SubResource("Theme_pjlc7")
-horizontal_scroll_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HBoxContainer/Main/Graph/Box"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Scroll" type="ScrollContainer" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("8_yppef")
+horizontal_scroll_mode = 2
 vertical_scroll_mode = 0
 
-[node name="Margin" type="MarginContainer" parent="HUD/Main/Graph/Scroll"]
+[node name="Margin" type="MarginContainer" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 28
 
-[node name="Items" type="VBoxContainer" parent="HUD/Main/Graph/Scroll/Margin"]
+[node name="Items" type="VBoxContainer" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Box" type="HBoxContainer" parent="HUD/Main/Graph/Scroll/Margin/Items"]
+[node name="Box" type="HBoxContainer" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 30
 
-[node name="0" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="0" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 script = ExtResource("6_7t8ki")
-Value = 0.005
+Value = 0.209
 
-[node name="1" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="1" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 script = ExtResource("6_7t8ki")
 Value = 0.552
 
-[node name="6" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="6" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 script = ExtResource("6_7t8ki")
 Value = 0.235
 
-[node name="7" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="7" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 script = ExtResource("6_7t8ki")
 Value = 0.161
 
-[node name="8" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="8" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 script = ExtResource("6_7t8ki")
 Value = 0.293
 
-[node name="9" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="9" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 script = ExtResource("6_7t8ki")
 Value = 0.78
 
-[node name="10" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="10" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 script = ExtResource("6_7t8ki")
 Value = 0.547
 
-[node name="11" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="11" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 script = ExtResource("6_7t8ki")
 Value = 0.997
 
-[node name="2" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="2" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 
-[node name="3" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="3" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 
-[node name="4" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="4" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 
-[node name="5" parent="HUD/Main/Graph/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
+[node name="5" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/Box" instance=ExtResource("5_dywsh")]
 layout_mode = 2
 
-[node name="MarginB" type="Control" parent="HUD/Main/Graph/Scroll/Margin/Items"]
+[node name="MarginB" type="Control" parent="HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="HUD/HBoxContainer/Main/Graph/Box"]
+custom_minimum_size = Vector2(0, 5.245)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="HUD/HBoxContainer/Main"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 1
+
+[node name="HScrollBar" type="HScrollBar" parent="HUD/HBoxContainer/Main/Margin"]
+visible = false
+layout_mode = 2
+theme = ExtResource("8_yppef")
+theme_override_styles/scroll = SubResource("StyleBoxFlat_esp7k")
+theme_override_styles/scroll_focus = SubResource("StyleBoxFlat_esp7k")
+theme_override_styles/grabber = SubResource("StyleBoxFlat_ljudl")
+theme_override_styles/grabber_highlight = SubResource("StyleBoxFlat_g5sit")
+theme_override_styles/grabber_pressed = SubResource("StyleBoxFlat_6hv3g")
+max_value = 1560.0
+page = 200.0
+script = ExtResource("10_3nrrs")
 
 [node name="Outline" type="Panel" parent="."]
 visible = false
@@ -793,4 +1016,592 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_asjf1")
 metadata/_edit_lock_ = true
 
-[editable path="HUD/Main/Graph/Hours/6"]
+[node name="Overlay" type="ColorRect" parent="."]
+visible = false
+z_index = 12
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.756863)
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -197.0
+offset_top = -113.0
+offset_right = 194.0
+offset_bottom = 113.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_whuwc")
+
+[node name="Box" type="VBoxContainer" parent="Overlay/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="Overlay/Panel/Box"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sb0r7")
+
+[node name="Button" type="Button" parent="Overlay/Panel/Box/Panel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -13.0
+offset_right = -11.0
+offset_bottom = 14.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_36eer")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n5pug")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hrcip")
+
+[node name="Title" type="Label" parent="Overlay/Panel/Box/Panel/Button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -12.0
+offset_right = 5.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "×"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="File" type="Label" parent="Overlay/Panel/Box/Panel"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -10.5
+offset_right = 39.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "Settings"
+
+[node name="Margin" type="MarginContainer" parent="Overlay/Panel/Box"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/Panel/Box/Margin"]
+layout_mode = 2
+
+[node name="Autosave" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="File" type="Label" parent="Overlay/Panel/Box/Margin/VBoxContainer/Autosave"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -10.5
+offset_right = 39.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "Auto save every"
+
+[node name="HSlider" type="HSlider" parent="Overlay/Panel/Box/Margin/VBoxContainer/Autosave"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -125.5
+offset_top = -8.0
+offset_right = -15.5
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="OptionButton" type="OptionButton" parent="Overlay/Panel/Box/Margin/VBoxContainer/Autosave"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -13.0
+offset_right = -7.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme = SubResource("Theme_4lpkc")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i6yyj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jv2e1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_atnas")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0tyln")
+selected = 1
+item_count = 5
+popup/item_0/text = "30s"
+popup/item_1/text = "1m"
+popup/item_1/id = 1
+popup/item_2/text = "5m"
+popup/item_2/id = 2
+popup/item_3/text = "10m"
+popup/item_3/id = 3
+popup/item_4/text = "1h"
+popup/item_4/id = 4
+
+[node name="TargetHours" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="File" type="Label" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -10.5
+offset_right = 39.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "Target hours"
+
+[node name="OptionButton" type="OptionButton" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -13.0
+offset_right = -7.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_4lpkc")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i6yyj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jv2e1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_atnas")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0tyln")
+selected = 1
+item_count = 6
+popup/item_0/text = "1h"
+popup/item_1/text = "2h"
+popup/item_1/id = 1
+popup/item_2/text = "3h"
+popup/item_2/id = 2
+popup/item_3/text = "4h"
+popup/item_3/id = 3
+popup/item_4/text = "5h"
+popup/item_4/id = 4
+popup/item_5/text = "6h"
+popup/item_5/id = 5
+
+[node name="Control" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours"]
+anchors_preset = 0
+offset_left = 188.0
+offset_top = 7.0
+offset_right = 367.0
+offset_bottom = 26.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours/Control/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "5h"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours/Control/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -3.5
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0fjyy")
+
+[node name="HSlider" type="HSlider" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours/Control/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme = SubResource("Theme_mjpcs")
+theme_override_styles/slider = SubResource("StyleBoxEmpty_4sxlk")
+theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_4sxlk")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_4sxlk")
+min_value = 1.0
+max_value = 12.0
+value = 1.0
+
+[node name="TargetHours2" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="File" type="Label" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -10.5
+offset_right = 39.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "Target days"
+
+[node name="OptionButton" type="OptionButton" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -13.0
+offset_right = -7.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_4lpkc")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i6yyj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jv2e1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_atnas")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0tyln")
+selected = 1
+item_count = 6
+popup/item_0/text = "1h"
+popup/item_1/text = "2h"
+popup/item_1/id = 1
+popup/item_2/text = "3h"
+popup/item_2/id = 2
+popup/item_3/text = "4h"
+popup/item_3/id = 3
+popup/item_4/text = "5h"
+popup/item_4/id = 4
+popup/item_5/text = "6h"
+popup/item_5/id = 5
+
+[node name="Control" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2"]
+anchors_preset = 0
+offset_left = 188.0
+offset_top = 7.0
+offset_right = 367.0
+offset_bottom = 26.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2/Control/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2/Control/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2/Control/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -3.5
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0fjyy")
+
+[node name="HSlider" type="HSlider" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2/Control/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_mjpcs")
+theme_override_styles/slider = SubResource("StyleBoxEmpty_4sxlk")
+theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_4sxlk")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_4sxlk")
+min_value = 1.0
+max_value = 12.0
+value = 1.0
+
+[node name="LineEdit" type="SpinBox" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours2/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_xm0l1")
+min_value = 3.0
+max_value = 365.0
+value = 5.0
+
+[node name="TargetHours3" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="File" type="Label" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -10.5
+offset_right = 39.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "Working days only"
+
+[node name="OptionButton" type="OptionButton" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -13.0
+offset_right = -7.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_4lpkc")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i6yyj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jv2e1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_atnas")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0tyln")
+selected = 1
+item_count = 6
+popup/item_0/text = "1h"
+popup/item_1/text = "2h"
+popup/item_1/id = 1
+popup/item_2/text = "3h"
+popup/item_2/id = 2
+popup/item_3/text = "4h"
+popup/item_3/id = 3
+popup/item_4/text = "5h"
+popup/item_4/id = 4
+popup/item_5/text = "6h"
+popup/item_5/id = 5
+
+[node name="Control" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3"]
+visible = false
+anchors_preset = 0
+offset_left = 188.0
+offset_top = 7.0
+offset_right = 367.0
+offset_bottom = 26.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3/Control/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3/Control/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -3.5
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0fjyy")
+
+[node name="HSlider" type="HSlider" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3/Control/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_mjpcs")
+theme_override_styles/slider = SubResource("StyleBoxEmpty_4sxlk")
+theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_4sxlk")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_4sxlk")
+min_value = 1.0
+max_value = 12.0
+value = 1.0
+
+[node name="CheckBox" type="CheckBox" parent="Overlay/Panel/Box/Margin/VBoxContainer/TargetHours3"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -178.0
+offset_top = -9.0
+offset_right = -162.0
+offset_bottom = 7.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_pap50")
+expand_icon = true
+
+[node name="Autosave2" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="File" type="Label" parent="Overlay/Panel/Box/Margin/VBoxContainer/Autosave2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -10.5
+offset_right = 39.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "Auto save every"
+
+[node name="HSlider" type="HSlider" parent="Overlay/Panel/Box/Margin/VBoxContainer/Autosave2"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -125.5
+offset_top = -8.0
+offset_right = -15.5
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="OptionButton" type="OptionButton" parent="Overlay/Panel/Box/Margin/VBoxContainer/Autosave2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -15.0
+offset_bottom = 10.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_4lpkc")
+theme_override_font_sizes/font_size = 12
+item_count = 5
+popup/item_0/text = "30s"
+popup/item_1/text = "1m"
+popup/item_1/id = 1
+popup/item_2/text = "5m"
+popup/item_2/id = 2
+popup/item_3/text = "10m"
+popup/item_3/id = 3
+popup/item_4/text = "1h"
+popup/item_4/id = 4
+
+[node name="Window" parent="." instance=ExtResource("15_8vdil")]
+
+[editable path="HUD/HBoxContainer/Main/Graph/Hours/6"]
