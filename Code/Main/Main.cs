@@ -13,7 +13,9 @@ public partial class Main : Node
 
     GlobalInputCSharp globalInput;
 
-    Timer secondTimer;
+    Timer secondTimer, minuteTimer;
+
+    public bool IsActive = false;
 
     public override void _Ready()
     {
@@ -24,13 +26,21 @@ public partial class Main : Node
 
         secondTimer = new Timer();
         AddChild(secondTimer);
-
         secondTimer.OneShot = false;
         secondTimer.Start(1f);
-
         secondTimer.Timeout += OnSecond;
 
-        SpawnGraphItem(DateTime.Now);
+        minuteTimer = new Timer();
+        AddChild(minuteTimer);
+        minuteTimer.OneShot = false;
+        minuteTimer.Start(60f);
+        minuteTimer.Timeout += OnMinute;
+
+
+
+        //SpawnGraphItem(DateTime.Now);
+
+        UpdateHoursAndLines();
     }
 
     public MainSettings Settings { get; private set; }
@@ -38,12 +48,55 @@ public partial class Main : Node
 
     [Export] PackedScene uiGraphItemPS;
     [Export] HBoxContainer uiGraphItemsCtr;
+    [Export] UITime uiTime;
 
     Vector2 lastMousePos;
+
+    public event Action<TimeSpan> SecondPassed;
 
     void OnSecond()
     {
         GD.Print("sec");
+        var second = TimeSpan.FromSeconds(1f);
+
+        elapsed += second;
+        ElapsedTotal += second;
+
+        //var time = TimeSpan.FromSeconds(elapsed);
+        var str = elapsed.ToString(@"hh\:mm\:ss");
+
+        if (!ElapsedPerDay.ContainsKey(DateTime.Today))
+        {
+            ElapsedPerDay.Add(DateTime.Today, TimeSpan.Zero);
+        }
+
+        if (!_dayGraphItem.ContainsKey(DateTime.Today))
+        {
+            SpawnGraphItem(DateTime.Today);
+        }
+
+        ElapsedPerDay[DateTime.Today] = ElapsedPerDay[DateTime.Today].Add(second);
+
+        _dayGraphItem[DateTime.Today].SetDTS(this, DateTime.Today, ElapsedPerDay[DateTime.Today]);
+
+        //time.Add(TimeSpan.FromSeconds(dT));
+
+        //GD.Print(str);
+
+        //toggleRunningButton.GetNode<Label>("../Margin/Date").Text = str;
+
+        uiTime.TotalHours = ElapsedTotal;
+        uiTime.TotalHoursThisWeek = GetElapsedThisWeek();
+        uiTime.TotalHoursToday = GetElapsedToday();
+
+        SecondPassed?.Invoke(elapsed);
+        //GetNode<Label>("HUD/Actions/Total/Value").Text = FormattedTotalHours(ElapsedTotal);//.ToString(@"h\hmm");
+        //GetNode<Label>("HUD/Actions/Today/Value").Text = GetElapsedToday().ToString(@"h\hmm");
+    }
+
+    void OnMinute()
+    {
+        UIScore.SetValue(GetDevScore());
     }
 
     public override void _PhysicsProcess(double dT)
@@ -124,47 +177,52 @@ public partial class Main : Node
         var weight = 0f;
 
         var i = 0;
-        var weekDays = 0;
+        var days = 0;
 
         var TODAY = DateTime.Today;
-        var thisDay = TODAY;
-
-        while (weekDays < 45)
+        var currDay = TODAY;
+        //return 0f;
+        //GD.Print("td = ", Settings.TargetDays);
+        while (days < Settings.TargetDays)
         {
-            thisDay = TODAY.AddDays(-i);
+            //GD.Print("--");
+            var isWeekend = currDay.DayOfWeek == DayOfWeek.Sunday || currDay.DayOfWeek == DayOfWeek.Saturday;
 
-            if (thisDay.DayOfWeek != DayOfWeek.Sunday || thisDay.DayOfWeek != DayOfWeek.Saturday)
+            if (!isWeekend || !Settings.WorkingDaysOnly)
             {
                 //var dayW = i;
 
-                var dayScore = GetDayScore(thisDay);
-                var dayWeight = 1f - Mathf.Pow(i / 60f, 1f);
+                var dayScore = GetDayScore(currDay);
+                var dayWeight = 1f - Mathf.Pow(days / (float)Settings.TargetDays, 1f);
 
                 //if (dayScore > 0f)
                 {
-                    //GD.Print($"Score of {thisDay.ToString("dd/MM/yyyy")} ({thisDay.DayOfWeek}): {dayScore}, w: {dayWeight}");
+                    GD.Print($"Score of {currDay.ToString("dd/MM/yyyy")} ({currDay.DayOfWeek}): {dayScore}, w: {dayWeight}");
                 }
 
                 score += dayScore * dayWeight;
                 weight += dayWeight;
-                weekDays++;
+                days++;
             }
 
-            i++;
+            //GD.Print("--2");
+            //GD.Print()
+            currDay = currDay.Add(-TimeSpan.FromDays(1));
+            //GD.Print("--3");
+
+            //i++;
         }
         
 
-        //GD.Print($"-------- total score:  { score / weight } ({score} / {weight})");
+        GD.Print($"-------- total score:  { score / weight }");
 
-        return (float)(score / weight);
+        return (float)(score /weight);
     }
     public float GetDayScore(DateTime day)
     {
         var time = GetElapsedAtDay(day);
-        var dScore = 1f;
 
-
-        return Mathf.Pow(dScore, 1.25f);
+        return Mathf.Clamp(Mathf.InverseLerp(0, Settings.TargetHours, (float)time.TotalHours), 0, 1);
     }
 
 
@@ -187,6 +245,30 @@ public partial class Main : Node
             return TimeSpan.Zero;
 
         return ElapsedPerDay[DateTime.Today];
+    }
+
+    TimeSpan GetElapsedThisWeek()
+    {
+        TimeSpan weekSpan = TimeSpan.Zero;
+        DateTime t = DateTime.Today;
+
+        while(true)
+        {
+            if (ElapsedPerDay.ContainsKey(t))
+            {
+                weekSpan += ElapsedPerDay[t];
+            }
+
+
+            if (t.DayOfWeek == DayOfWeek.Sunday)
+            {
+                break;
+            }
+
+            t = t.AddDays(-1);
+        }
+
+        return weekSpan;
     }
 
     TimeSpan GetElapsedAtDay(DateTime day)

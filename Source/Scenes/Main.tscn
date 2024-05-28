@@ -285,10 +285,11 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Node" type="Node" node_paths=PackedStringArray("uiGraphItemsCtr", "linesCtr", "hoursCtr", "UIScore")]
+[node name="Node" type="Node" node_paths=PackedStringArray("uiGraphItemsCtr", "uiTime", "linesCtr", "hoursCtr", "UIScore")]
 script = ExtResource("1_xrtfl")
 uiGraphItemPS = ExtResource("5_dywsh")
 uiGraphItemsCtr = NodePath("HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/uiGraphItemsCtr")
+uiTime = NodePath("HUD/TopBar/Time")
 linesCtr = NodePath("Margin/Lines")
 hoursCtr = NodePath("HUD/HBoxContainer/Main/Graph/Hours")
 UIScore = NodePath("HUD/TopBar/Score")
@@ -1609,8 +1610,10 @@ popup/item_3/id = 3
 popup/item_4/text = "1h"
 popup/item_4/id = 4
 
-[node name="Window" parent="." instance=ExtResource("15_8vdil")]
+[node name="Window" parent="." node_paths=PackedStringArray("_toggle", "_togglePn") instance=ExtResource("15_8vdil")]
 visible = false
+_toggle = NodePath("TimerWindow/Panel/Box/Panel/Toggle")
+_togglePn = NodePath("TimerWindow/Panel/Box/Panel")
 
 [node name="FileDialog" type="FileDialog" parent="."]
 position = Vector2i(200, 85)

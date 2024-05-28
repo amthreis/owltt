@@ -9,38 +9,45 @@ namespace Task
 {
     public partial class UITime : HBoxContainer
     {
-        float _totalHours;
-        float _totalHoursThisWeek;
-        float _totalHoursToday;
+        TimeSpan _totalHours;
+        TimeSpan _totalHoursThisWeek;
+        TimeSpan _totalHoursToday;
 
-        public float TotalHours
+        public TimeSpan TotalHours
         {
             get => _totalHours;
             set
             {
                 _totalHours = value;
-                GetNode<Label>("Total/Value").Text = "";
+                //GetNode<Label>("Total/Value").Text = "";
+
+                GetNode<Label>("Total/Value").Text = _totalHours.ToString(@"h\hmm"); //FormattedTotalHours(_totalHours);//.ToString(@"h\hmm");
             }
         }
 
-        public float TotalHoursThisWeek
+        public TimeSpan TotalHoursThisWeek
         {
             get => _totalHoursThisWeek;
             set
             {
                 _totalHoursThisWeek = value;
-                GetNode<Label>("ThisWeek/Value").Text = "";
+                GetNode<Label>("ThisWeek/Value").Text = _totalHoursThisWeek.ToString(@"h\hmm");
             }
         }
 
-        public float TotalHoursToday
+        public TimeSpan TotalHoursToday
         {
             get => _totalHoursToday;
             set
             {
                 _totalHoursToday = value;
-                GetNode<Label>("Today/Value").Text = "";
+                GetNode<Label>("Today/Value").Text = _totalHoursToday.ToString(@"h\hmm");
             }
+        }
+
+        string FormattedTotalHours(TimeSpan span)
+        {
+            return string.Format("{0}h{1}", (int)span.TotalHours, span.Minutes);
         }
     }
 }

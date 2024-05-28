@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://41kd3k5usml8"]
+[gd_scene load_steps=8 format=3 uid="uid://41kd3k5usml8"]
 
+[ext_resource type="Script" path="res://Code/UI/UITimerWindow.cs" id="1_fw8pk"]
 [ext_resource type="Texture2D" uid="uid://qbdthy4xn86c" path="res://Source/Textures/MoveArrow3.png" id="1_hlr7t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u0ykl"]
@@ -59,7 +60,7 @@ func _process(delta):
 	pass
 "
 
-[node name="Window" type="Window"]
+[node name="Window" type="Window" node_paths=PackedStringArray("_toggle", "_togglePn")]
 auto_translate_mode = 1
 transparent_bg = true
 initial_position = 1
@@ -68,6 +69,9 @@ exclusive = true
 borderless = true
 always_on_top = true
 transparent = true
+script = ExtResource("1_fw8pk")
+_toggle = NodePath("TimerWindow/Panel/Box/Panel/Toggle")
+_togglePn = NodePath("TimerWindow/Panel/Box/Panel")
 
 [node name="TimerWindow" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -104,6 +108,17 @@ theme_override_font_sizes/font_size = 18
 text = "04:11:54"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Toggle" type="Button" parent="TimerWindow/Panel/Box/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
 
 [node name="Drag" type="Button" parent="TimerWindow/Panel/Box"]
 self_modulate = Color(0.17, 0.17, 0.17, 1)

@@ -15,10 +15,10 @@ namespace Task
             this.m = m;
         }
 
-        public float AutoSaveEveryMinutes { get; private set; } = 1f;
-        public int TargetHours { get; private set; } = 6;
-        public int TargetDays { get; private set; } = 30;
-        public bool WorkingDaysOnly { get; private set; } = true;
+        public float AutoSaveEveryMinutes { get; set; } = 1f;
+        public int TargetHours { get; set; } = 6;
+        public int TargetDays { get; set; } = 5;
+        public bool WorkingDaysOnly { get; set; } = true;
 
         public void SetAutoSaveEveryMinutes(float min)
         {
