@@ -60,7 +60,7 @@ func _process(delta):
 	pass
 "
 
-[node name="Window" type="Window" node_paths=PackedStringArray("_toggle", "_togglePn")]
+[node name="Window" type="Window" node_paths=PackedStringArray("_toggle", "_togglePn", "_timerLb")]
 auto_translate_mode = 1
 transparent_bg = true
 initial_position = 1
@@ -72,6 +72,7 @@ transparent = true
 script = ExtResource("1_fw8pk")
 _toggle = NodePath("TimerWindow/Panel/Box/Panel/Toggle")
 _togglePn = NodePath("TimerWindow/Panel/Box/Panel")
+_timerLb = NodePath("TimerWindow/Panel/Box/Panel/Label")
 
 [node name="TimerWindow" type="MarginContainer" parent="."]
 anchors_preset = 15

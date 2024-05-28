@@ -285,8 +285,9 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Node" type="Node" node_paths=PackedStringArray("uiGraphItemsCtr", "uiTime", "linesCtr", "hoursCtr", "UIScore")]
+[node name="Node" type="Node" node_paths=PackedStringArray("uiTimerWindow", "uiGraphItemsCtr", "uiTime", "linesCtr", "hoursCtr", "UIScore")]
 script = ExtResource("1_xrtfl")
+uiTimerWindow = NodePath("Window")
 uiGraphItemPS = ExtResource("5_dywsh")
 uiGraphItemsCtr = NodePath("HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/uiGraphItemsCtr")
 uiTime = NodePath("HUD/TopBar/Time")

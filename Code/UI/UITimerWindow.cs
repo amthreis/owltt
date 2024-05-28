@@ -11,6 +11,7 @@ public partial class UITimerWindow : Window
 {
     [Export] Button _toggle;
     [Export] Panel _togglePn;
+    [Export] Label _timerLb;
     Main m;
 
     public void Start(Main m)
@@ -18,13 +19,22 @@ public partial class UITimerWindow : Window
         this.m = m;
 
         _toggle.Pressed += OnToggled;
+
+
+        UpdateTime(m.elapsed);
+        UpdateColor();
     }
 
     void OnToggled()
     {
-        m.IsActive = !m.IsActive;
+        m.Activate(!m.IsActive);
 
         UpdateColor();
+    }
+
+    public void UpdateTime(TimeSpan ts)
+    {
+        _timerLb.Text = ts.ToString(@"hh\:mm\:ss");
     }
 
     void UpdateColor()

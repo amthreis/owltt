@@ -11,11 +11,21 @@ public partial class Main : Node
 {
     public static readonly Color[] TimerColors = new Color[] { new Color("595a58"), new Color("9a8247"), new Color("376845") };
 
+    [Export] UITimerWindow uiTimerWindow;
+
     GlobalInputCSharp globalInput;
 
     Timer secondTimer, minuteTimer;
 
-    public bool IsActive = false;
+    public bool IsActive { get; private set; } = false;
+
+    public void Activate(bool enable)
+    {
+        IsActive = enable;
+
+        secondTimer.ProcessMode = enable ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
+        minuteTimer.ProcessMode = enable ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
+    }
 
     public override void _Ready()
     {
@@ -36,8 +46,10 @@ public partial class Main : Node
         minuteTimer.Start(60f);
         minuteTimer.Timeout += OnMinute;
 
+        Activate(false);
 
 
+        uiTimerWindow.Start(this);
         //SpawnGraphItem(DateTime.Now);
 
         UpdateHoursAndLines();
@@ -89,7 +101,9 @@ public partial class Main : Node
         uiTime.TotalHoursThisWeek = GetElapsedThisWeek();
         uiTime.TotalHoursToday = GetElapsedToday();
 
-        SecondPassed?.Invoke(elapsed);
+
+        uiTimerWindow.UpdateTime(elapsed);
+        //SecondPassed?.Invoke(elapsed);
         //GetNode<Label>("HUD/Actions/Total/Value").Text = FormattedTotalHours(ElapsedTotal);//.ToString(@"h\hmm");
         //GetNode<Label>("HUD/Actions/Today/Value").Text = GetElapsedToday().ToString(@"h\hmm");
     }
@@ -165,7 +179,7 @@ public partial class Main : Node
     bool saveMode;
     string saveToPath;
 
-    TimeSpan elapsed;
+    public TimeSpan elapsed;
     public TimeSpan ElapsedTotal { get; private set; }
     public Dictionary<DateTime, TimeSpan> ElapsedPerDay { get; private set; } = new Dictionary<DateTime, TimeSpan>();
 
