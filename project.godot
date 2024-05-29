@@ -14,6 +14,8 @@ config/name="owl.tt"
 run/main_scene="res://Source/Scenes/Main.tscn"
 config/features=PackedStringArray("4.3", "C#", "Mobile")
 run/max_fps=60
+boot_splash/image="res://Source/Textures/splash.png"
+boot_splash/fullsize=false
 config/icon="res://Source/Textures/Logo.svg"
 
 [autoload]
