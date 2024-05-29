@@ -21,7 +21,7 @@ namespace Task
                 _totalHours = value;
                 //GetNode<Label>("Total/Value").Text = "";
 
-                GetNode<Label>("Total/Value").Text = _totalHours.ToString(@"h\hmm"); //FormattedTotalHours(_totalHours);//.ToString(@"h\hmm");
+                GetNode<Label>("Total/Value").Text = FormattedTotalHours(_totalHours);//.ToString(@"h\hmm"); //FormattedTotalHours(_totalHours);//.ToString(@"h\hmm");
             }
         }
 
@@ -43,6 +43,13 @@ namespace Task
                 _totalHoursToday = value;
                 GetNode<Label>("Today/Value").Text = _totalHoursToday.ToString(@"h\hmm");
             }
+        }
+
+        public void Reset()
+        {
+            _totalHours = TimeSpan.Zero;
+            _totalHoursThisWeek = TimeSpan.Zero;
+            _totalHoursToday = TimeSpan.Zero;
         }
 
         string FormattedTotalHours(TimeSpan span)

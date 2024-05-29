@@ -9,7 +9,7 @@ namespace Task;
 
 public partial class UIToggleTimer : Button
 {
-    [Export] public Window TimerWindow;
+    [Export] public UITimerWindow TimerWindow;
 
     public override void _Pressed()
     {
@@ -18,6 +18,7 @@ public partial class UIToggleTimer : Button
         if (!TimerWindow.Visible)
         {
             //stop timer
+            TimerWindow.m.Activate(false);
         }
     }
 }

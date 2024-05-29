@@ -34,16 +34,10 @@ subpixel_positioning = 0
 [sub_resource type="GDScript" id="GDScript_nciuq"]
 script/source = "extends Button
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 var drag:= false
 var drag_pos:= Vector2()
 
 func _gui_input(ev):
-	
 	if ev is InputEventMouseButton:
 		if ev.pressed:
 			drag = true
@@ -54,10 +48,6 @@ func _gui_input(ev):
 	
 	if ev is InputEventMouseMotion && drag:
 		get_window().position += (Vector2i)(ev.position - drag_pos)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 "
 
 [node name="Window" type="Window" node_paths=PackedStringArray("_toggle", "_togglePn", "_timerLb")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://csjndwc4wtdud"]
+[gd_scene load_steps=51 format=3 uid="uid://csjndwc4wtdud"]
 
 [ext_resource type="Texture2D" uid="uid://dn447rd515u2c" path="res://Source/Textures/Logo.svg" id="1_505f1"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphLines.cs" id="1_r84ld"]
@@ -14,6 +14,7 @@
 [ext_resource type="Theme" uid="uid://cl77pq13m5a48" path="res://Source/MainTheme.tres" id="8_yppef"]
 [ext_resource type="Script" path="res://Code/UI/UIToggleTimer.cs" id="9_87fqq"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphScrollBar.cs" id="10_3nrrs"]
+[ext_resource type="Script" path="res://Code/UI/UISettings.cs" id="15_0hstk"]
 [ext_resource type="PackedScene" uid="uid://41kd3k5usml8" path="res://Source/Prefabs/TimerWindow.tscn" id="15_8vdil"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mf8o"]
@@ -25,6 +26,13 @@ border_width_bottom = 2
 border_color = Color(0.184314, 0.184314, 0.184314, 1)
 shadow_color = Color(0, 0, 0, 0.172549)
 shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nojwl"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36eer"]
 content_margin_left = 10.0
@@ -49,13 +57,6 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrcip"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nojwl"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
 
 [sub_resource type="SystemFont" id="SystemFont_ff0lq"]
 font_names = PackedStringArray("Bahnschrift")
@@ -285,12 +286,13 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Node" type="Node" node_paths=PackedStringArray("uiTimerWindow", "uiGraphItemsCtr", "uiTime", "linesCtr", "hoursCtr", "UIScore")]
+[node name="Node" type="Node" node_paths=PackedStringArray("uiTimerWindow", "uiGraphItemsCtr", "uiTime", "fileMB", "linesCtr", "hoursCtr", "UIScore")]
 script = ExtResource("1_xrtfl")
 uiTimerWindow = NodePath("Window")
 uiGraphItemPS = ExtResource("5_dywsh")
 uiGraphItemsCtr = NodePath("HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/uiGraphItemsCtr")
 uiTime = NodePath("HUD/TopBar/Time")
+fileMB = NodePath("HUD/TopBar/Menu")
 linesCtr = NodePath("Margin/Lines")
 hoursCtr = NodePath("HUD/HBoxContainer/Main/Graph/Hours")
 UIScore = NodePath("HUD/TopBar/Score")
@@ -385,7 +387,66 @@ custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8qdxj")
 
+[node name="Menu" type="MenuButton" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -10.0
+offset_right = 31.0
+offset_bottom = 8.0
+grow_vertical = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 12
+item_count = 6
+popup/item_0/text = "New"
+popup/item_1/text = "Open"
+popup/item_1/id = 1
+popup/item_2/text = "Save"
+popup/item_2/id = 2
+popup/item_3/text = "Save As..."
+popup/item_3/id = 3
+popup/item_4/text = "Settings"
+popup/item_4/id = 6
+popup/item_5/text = "Recent"
+popup/item_5/id = 4
+popup/item_5/separator = true
+
+[node name="Icon" type="VBoxContainer" parent="HUD/TopBar/Menu"]
+modulate = Color(0.843137, 0.843137, 0.843137, 1)
+layout_mode = 2
+offset_right = 14.0
+offset_bottom = 18.0
+mouse_filter = 2
+alignment = 1
+
+[node name="0" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+custom_minimum_size = Vector2(14, 2)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
+
+[node name="1" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+custom_minimum_size = Vector2(14, 2)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
+
+[node name="2" type="Panel" parent="HUD/TopBar/Menu/Icon"]
+custom_minimum_size = Vector2(14, 2)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
+
+[node name="Title" type="Label" parent="HUD/TopBar/Menu"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Menu"
+
 [node name="ToggleMenu" type="Button" parent="HUD/TopBar"]
+visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -400,62 +461,6 @@ mouse_default_cursor_shape = 2
 theme_override_styles/hover = SubResource("StyleBoxFlat_36eer")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_n5pug")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_hrcip")
-
-[node name="Menu" type="MenuButton" parent="HUD/TopBar/ToggleMenu"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 7.0
-offset_top = -10.0
-offset_right = 21.0
-offset_bottom = 8.0
-grow_vertical = 2
-mouse_filter = 1
-theme_override_font_sizes/font_size = 12
-item_count = 5
-popup/item_0/text = "New"
-popup/item_1/text = "Open"
-popup/item_1/id = 1
-popup/item_2/text = "Save"
-popup/item_2/id = 2
-popup/item_3/text = "Save As..."
-popup/item_3/id = 3
-popup/item_4/text = "Recent"
-popup/item_4/id = 4
-popup/item_4/separator = true
-
-[node name="Icon" type="VBoxContainer" parent="HUD/TopBar/ToggleMenu/Menu"]
-modulate = Color(0.843137, 0.843137, 0.843137, 1)
-layout_mode = 2
-offset_right = 14.0
-offset_bottom = 18.0
-mouse_filter = 2
-alignment = 1
-
-[node name="0" type="Panel" parent="HUD/TopBar/ToggleMenu/Menu/Icon"]
-custom_minimum_size = Vector2(14, 2)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
-
-[node name="1" type="Panel" parent="HUD/TopBar/ToggleMenu/Menu/Icon"]
-custom_minimum_size = Vector2(14, 2)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
-
-[node name="2" type="Panel" parent="HUD/TopBar/ToggleMenu/Menu/Icon"]
-custom_minimum_size = Vector2(14, 2)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_nojwl")
-
-[node name="Title" type="Label" parent="HUD/TopBar/ToggleMenu/Menu"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "Menu"
 
 [node name="Title" type="Label" parent="HUD/TopBar/ToggleMenu"]
 visible = false
@@ -1037,6 +1042,7 @@ color = Color(0, 0, 0, 0.756863)
 metadata/_edit_lock_ = true
 
 [node name="Panel" type="Panel" parent="Overlay"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1050,6 +1056,7 @@ offset_bottom = 113.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_whuwc")
+script = ExtResource("15_0hstk")
 
 [node name="Box" type="VBoxContainer" parent="Overlay/Panel"]
 layout_mode = 1
@@ -1611,10 +1618,11 @@ popup/item_3/id = 3
 popup/item_4/text = "1h"
 popup/item_4/id = 4
 
-[node name="Window" parent="." node_paths=PackedStringArray("_toggle", "_togglePn") instance=ExtResource("15_8vdil")]
+[node name="Window" parent="." node_paths=PackedStringArray("_toggle", "_togglePn", "_timerLb") instance=ExtResource("15_8vdil")]
 visible = false
 _toggle = NodePath("TimerWindow/Panel/Box/Panel/Toggle")
 _togglePn = NodePath("TimerWindow/Panel/Box/Panel")
+_timerLb = NodePath("TimerWindow/Panel/Box/Panel/Label")
 
 [node name="FileDialog" type="FileDialog" parent="."]
 position = Vector2i(200, 85)

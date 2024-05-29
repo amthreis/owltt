@@ -3,9 +3,10 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Task;
-
 
 public partial class Main : Node
 {
@@ -27,8 +28,18 @@ public partial class Main : Node
         minuteTimer.ProcessMode = enable ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
     }
 
+    static Action[] _fileMBActions;
+
     public override void _Ready()
     {
+        GetNode("FileDialog").Connect("canceled", Callable.From(OnCancelFD));
+        GetNode("FileDialog").Connect("file_selected", Callable.From<string>(OnConfirmFD));
+
+        _fileMBActions = new Action[]
+        {
+            OnNew, OnLoad, () => OnSave(false), () => OnSave(true), OnOpenSettings
+        };
+
         Settings = new MainSettings(this);
         Data = new MainData();
 
@@ -48,8 +59,14 @@ public partial class Main : Node
 
         Activate(false);
 
+        //fileMB = GetNode<MenuButton>("HUD/TopBar/File");
+        fileMBCount = fileMB.GetPopup().ItemCount;
 
-        uiTimerWindow.Start(this);
+
+        fileMB.AboutToPopup += OnFileMBOpened;
+        fileMB.GetPopup().IndexPressed += OnFileMBClicked;
+
+        uiTimerWindow.Start(this, true);
         //SpawnGraphItem(DateTime.Now);
 
         UpdateHoursAndLines();
@@ -66,6 +83,29 @@ public partial class Main : Node
 
     public event Action<TimeSpan> SecondPassed;
 
+    [Export] MenuButton fileMB;
+    int fileMBCount;
+
+    void OnOpenSettings()
+    {
+        GetNode<Control>("Overlay").Show();
+        GetNode<Control>("Overlay/Panel").Show();
+    }
+
+    void OnFileMBClicked(long i)
+    {
+        if (i < fileMBCount)
+        {
+            _fileMBActions[i].Invoke();
+        }
+        else
+        {
+            var rcID = i - fileMBCount;
+
+            Load(recentSaveToPath[(int)rcID]);
+        }
+    }
+
     void OnSecond()
     {
         GD.Print("sec");
@@ -74,7 +114,6 @@ public partial class Main : Node
         elapsed += second;
         ElapsedTotal += second;
 
-        //var time = TimeSpan.FromSeconds(elapsed);
         var str = elapsed.ToString(@"hh\:mm\:ss");
 
         if (!ElapsedPerDay.ContainsKey(DateTime.Today))
@@ -88,29 +127,111 @@ public partial class Main : Node
         }
 
         ElapsedPerDay[DateTime.Today] = ElapsedPerDay[DateTime.Today].Add(second);
-
         _dayGraphItem[DateTime.Today].SetDTS(this, DateTime.Today, ElapsedPerDay[DateTime.Today]);
 
         //time.Add(TimeSpan.FromSeconds(dT));
-
         //GD.Print(str);
-
         //toggleRunningButton.GetNode<Label>("../Margin/Date").Text = str;
 
         uiTime.TotalHours = ElapsedTotal;
         uiTime.TotalHoursThisWeek = GetElapsedThisWeek();
         uiTime.TotalHoursToday = GetElapsedToday();
-
-
         uiTimerWindow.UpdateTime(elapsed);
+
         //SecondPassed?.Invoke(elapsed);
         //GetNode<Label>("HUD/Actions/Total/Value").Text = FormattedTotalHours(ElapsedTotal);//.ToString(@"h\hmm");
         //GetNode<Label>("HUD/Actions/Today/Value").Text = GetElapsedToday().ToString(@"h\hmm");
     }
 
+    public DateTime CreationDate = DateTime.Now;
+
     void OnMinute()
     {
         UIScore.SetValue(GetDevScore());
+    }
+
+    float lastAutoSavedAtMinute;
+
+    void Load(string path)
+    {
+        //var path = "C:/Users/Matheus/Documents/dev/Taskerus/Programmer.tsk";
+
+        GD.Print("--------------LOAD");
+        //var box = GetNode("HUD/Tabs/Panel/Margin/Scroll/Box");
+
+        //foreach (var it in box.GetChildren())
+        //{
+        //    it.QueueFree();
+        //}
+
+        foreach (var it in _dayGraphItem)
+        {
+            it.Value.QueueFree();
+        }
+
+        _dayGraphItem.Clear();
+
+        uiTimerWindow.Hide();
+        // while(box.GetChildCount() == 0)
+        // {
+        //    box.GetChild(box.GetChildCount() - 1).QueueFree();
+        // }
+
+
+        path = path.Replace("\\", "/");
+
+        var tSD = Deserialize<MainSD>(path);
+
+        Settings = tSD.Settings ?? new MainSettings(this);
+        Settings.m = this;
+
+        lastAutoSavedAtMinute = 0;
+        CreationDate = tSD.CreationDate;
+        //tasks = tSD.Tasks.OrderByDescending(t => t.State).ThenBy(t => t.Date[t.State]).ToList();
+        ElapsedTotal = tSD.ElapsedTotal;
+        ElapsedPerDay = tSD.ElapsedPerDay ?? new Dictionary<DateTime, TimeSpan>();
+
+        Activate(false);
+        var currDate = new DateTime(1, 1, 1);
+        //TTaskState? lastState = null;
+
+        if (ElapsedPerDay != null && ElapsedPerDay.Count > 0)
+        for (var d = ElapsedPerDay.ElementAt(0).Key; d <= DateTime.Today; d = d.AddDays(1))
+        {
+            SpawnGraphItem(d);
+        }
+
+
+        saveToPath = path;
+
+        //GetNode<Label>("HUD/Actions/Total/Value").Text = FormattedTotalHours(ElapsedTotal);
+        //GetNode<Label>("HUD/Actions/Today/Value").Text = GetElapsedToday().ToString(@"h\hmm");
+
+        uiTime.TotalHours = ElapsedTotal;
+        uiTime.TotalHoursToday = GetElapsedToday();
+        uiTime.TotalHoursThisWeek = GetElapsedThisWeek();
+
+        AddSaveToPath(path);
+
+        GetWindow().Title = $"{path} - owl.tt";
+
+        UIScore.SetValue(GetDevScore());
+
+
+        uiTimerWindow.Start(this, false);
+        //SpawnGraphItem(DateTime.Now);
+
+        UpdateHoursAndLines();
+        //UpdateDevScore();
+    }
+    List<string> recentSaveToPath = new List<string>();
+
+    void AddSaveToPath(string path)
+    {
+        saveToPath = path;
+
+        recentSaveToPath.Remove(saveToPath);
+        recentSaveToPath.Insert(0, saveToPath);
     }
 
     public override void _PhysicsProcess(double dT)
@@ -134,16 +255,6 @@ public partial class Main : Node
     [Export] VBoxContainer hoursCtr;
     [Export] public UIScore UIScore;
 
-    public override void _Input(InputEvent ev)
-    {
-        if (ev.IsActionPressed("ui_up"))
-        {
-            GetNode("FileDialog").Set("file_mode", 0);
-            GetNode("FileDialog").Call("set_filters", new string[] { "*.tsk ; Taskeru Files" });
-            GetNode("FileDialog").Call("show");
-        }
-    }
-
     public void UpdateHoursAndLines()
     {
         if (hoursCtr == null || linesCtr == null)
@@ -163,6 +274,43 @@ public partial class Main : Node
         UIScore.UpdateControls();
     }
 
+    void OnCancelFD()
+    {
+        GetNode<Control>("Overlay").Hide();
+
+    }
+    void OnConfirmFD(string path)
+    {
+        GetNode<Control>("Overlay").Hide();
+
+        if (saveMode)
+        {
+            GD.Print("p");
+            var sd = new MainSD(this);
+            path = path.Replace("\\", "/");
+            GD.Print(path);
+
+            Serialize(sd, path);
+
+            GD.Print(path);
+            //saveToPath = path;
+            AddSaveToPath(path);
+            //GetWindow().Title = $"{path} - Taskeru";
+
+            GD.Print("Saved to ", path);
+
+            //NoAsterisk();
+        }
+        else
+        {
+            Load(path);
+
+            //saveToPath = path;
+
+            GD.Print("Loaded from ", path);
+        }
+
+    }
 
     void OnLoad()
     {
@@ -171,9 +319,15 @@ public partial class Main : Node
         saveMode = false;
         GetNode<Control>("Overlay").Show();
 
-        GetNode("FileDialog").Set("file_mode", 0);
-        GetNode("FileDialog").Call("set_filters", new string[] { "*.tsk ; Taskeru Files" });
-        GetNode("FileDialog").Call("show");
+        var fd = GetNode<FileDialog>("FileDialog");
+
+        fd.FileMode = FileDialog.FileModeEnum.OpenFile;
+        fd.Filters = new string[] { "*.owltt ; owl.tt Files" };
+        fd.Show();
+
+        //GetNode("FileDialog").Set("file_mode", 0);
+        //GetNode("FileDialog").Call("set_filters", new string[] { "*.owltt ; owl.tt Files" });
+        //GetNode("FileDialog").Call("show");
     }
 
     bool saveMode;
@@ -293,6 +447,55 @@ public partial class Main : Node
         return ElapsedPerDay[day];
     }
 
+    void OnFileMBOpened()
+    {
+        var i = fileMBCount;
+
+        while (fileMB.GetPopup().ItemCount > fileMBCount)
+        {
+            fileMB.GetPopup().RemoveItem(fileMB.GetPopup().ItemCount - 1);
+        }
+
+        foreach (var rc in recentSaveToPath)
+        {
+            fileMB.GetPopup().AddItem(rc);
+        }
+
+        //fileMB.GetPopup().SetItemShortcut
+        //fileMB.GetPopup().RemoveItem();
+        //fileMB.GetPopup().AddItem();
+    }
+
+    void OnNew()
+    {
+        GD.Print("--------------NEW");
+        
+
+        foreach (var it in _dayGraphItem)
+        {
+            it.Value.QueueFree();
+        }
+        _dayGraphItem.Clear();
+
+        uiTimerWindow.Hide();
+        lastAutoSavedAtMinute = 0;
+
+        Activate(false);
+
+        CreationDate = DateTime.Now;
+        //tasks = new List<TTask>();
+        ElapsedTotal = TimeSpan.Zero;
+        ElapsedPerDay = new Dictionary<DateTime, TimeSpan>();
+
+        uiTime.Reset();
+
+
+        uiTimerWindow.Start(this, false);
+        //SpawnGraphItem(DateTime.Now);
+
+        UpdateHoursAndLines();
+    }
+
     void OnSave(bool saveAs = false)
     {
         saveMode = true;
@@ -310,8 +513,14 @@ public partial class Main : Node
         {
             GetNode<Control>("Overlay").Show();
 
-            GetNode("FileDialog").Set("file_mode", 3);
-            GetNode("FileDialog").Call("set_filters", new string[] { "*.tsk ; Taskeru Files" });
+            var fd = GetNode<FileDialog>("FileDialog");
+
+            //fd.FileMode = FileDialog.FileModeEnum.SaveFile;
+            //fd.Filters = new string[] { "*.owltt ; owl.tt Files" };
+            //fd.Show();
+
+            GetNode("FileDialog").Set("file_mode", 4);
+            GetNode("FileDialog").Call("set_filters", new string[] { "*.owltt ; owl.tt Files" });
             GetNode("FileDialog").Call("show");
             GD.Print("Done");
         }
@@ -324,7 +533,10 @@ public partial class Main : Node
 
     public static void Serialize(object o, string path, Action callback = null)
     {
+        GD.Print("serialize");
         var lastSlash = path.LastIndexOf('/');
+        GD.Print("lastSlash", lastSlash);
+
         var substr = path.Substring(0, lastSlash);
         var _f = FileAccess.Open(path, FileAccess.ModeFlags.Write);
         var data = JsonConvert.SerializeObject(o, Formatting.Indented,

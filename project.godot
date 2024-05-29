@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="C:/Users/Matheus/Documents/dev - Taskeru"
+config/name="owl.tt"
 run/main_scene="res://Source/Scenes/Main.tscn"
 config/features=PackedStringArray("4.3", "C#", "Mobile")
 run/max_fps=60
@@ -19,6 +19,10 @@ config/icon="res://Source/Textures/Logo.svg"
 [autoload]
 
 GlobalInput="*res://addons/global_input/autoloads/global_input_gdscript/GlobalInputGDScript.tscn"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [display]
 

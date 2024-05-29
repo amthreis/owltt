@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Task
 {
+    [Serializable]
     public class MainSettings
     {
-        Main m;
+        public Main m;
 
         public MainSettings(Main m)
         {
             this.m = m;
         }
+
+        public MainSettings() { }   
 
         public float AutoSaveEveryMinutes { get; set; } = 1f;
         public int TargetHours { get; set; } = 6;

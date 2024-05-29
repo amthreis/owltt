@@ -12,18 +12,22 @@ public partial class UITimerWindow : Window
     [Export] Button _toggle;
     [Export] Panel _togglePn;
     [Export] Label _timerLb;
-    Main m;
+    public Main m;
 
-    public void Start(Main m)
+    public void Start(Main m, bool connect)
     {
         this.m = m;
 
-        _toggle.Pressed += OnToggled;
+        if (connect)
+        {
+            _toggle.Pressed += OnToggled;
+        }
 
 
         UpdateTime(m.elapsed);
         UpdateColor();
     }
+
 
     void OnToggled()
     {
