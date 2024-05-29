@@ -10,6 +10,7 @@ namespace Task
     //[Tool]
     public partial class UIGraphItem : VBoxContainer
     {
+        Main m;
         float _value;
 
         [Export(PropertyHint.Range, "0, 1")]
@@ -24,8 +25,18 @@ namespace Task
             }
         }
 
+        public void UpdateBar(TimeSpan time)
+        {
+            var timeRatio = (float)(time / TimeSpan.FromHours(m.Settings.TargetHours));
+
+            GetNode<Control>("Panel").SizeFlagsStretchRatio = timeRatio;
+            GetNode<Control>("Remainder").SizeFlagsStretchRatio = 1f - timeRatio;
+        }
+
         public void SetDTS(Main m, DateTime day, TimeSpan time)
         {
+            this.m = m;
+
             var date = day.ToString("dd/MM/yyyy").Split("/");// $"{}\n({day.DayOfWeek.ToString()[0..3]})".Split();
 
             GetNode<Label>("Panel/Info/Weekday").Text = day.DayOfWeek.ToString()[0..3];
@@ -42,12 +53,8 @@ namespace Task
 
             //MaxTime.ra
 
-            var isWeekend = day.DayOfWeek == DayOfWeek.Sunday || day.DayOfWeek == DayOfWeek.Saturday;
-
-            var timeRatio = (float)(time / TimeSpan.FromHours(m.Settings.TargetHours));
-
-            GetNode<Control>("Panel").SizeFlagsStretchRatio = timeRatio;
-            GetNode<Control>("Remainder").SizeFlagsStretchRatio = 1f - timeRatio;
+            //var isWeekend = day.DayOfWeek == DayOfWeek.Sunday || day.DayOfWeek == DayOfWeek.Saturday;
+            UpdateBar(time);
 
             //GetNode<Control>("Box/Content/Bar/Bar").SelfModulate = new Color(isWeekend ? "837f89" : "856aad");
 

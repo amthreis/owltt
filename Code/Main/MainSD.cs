@@ -21,7 +21,7 @@ public class MainSD
         CreationDate  = m.CreationDate;
         ElapsedTotal  = m.ElapsedTotal;
         ElapsedPerDay = m.ElapsedPerDay;
-        //Settings = m.Settings;
+        Settings = m.Settings ?? new MainSettings();
 
         GD.Print("store ", CreationDate);
         GD.Print("store ", ElapsedTotal);

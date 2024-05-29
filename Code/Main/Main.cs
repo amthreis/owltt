@@ -30,8 +30,30 @@ public partial class Main : Node
 
     static Action[] _fileMBActions;
 
+    public void UpdateAll()
+    {
+        UpdateHoursAndLines();
+        UIScore.SetValue(GetDevScore());
+
+
+        foreach(var gI in _dayGraphItem)
+        {
+            if (ElapsedPerDay.ContainsKey(gI.Key))
+                gI.Value.UpdateBar(ElapsedPerDay[gI.Key]);
+        }
+    }
+
     public override void _Ready()
     {
+        try
+        {
+            recentSaveToPath = Deserialize<List<string>>("user://Recent");
+        }
+        catch (Exception e)
+        {
+            recentSaveToPath = new List<string>();
+        }
+
         GetNode("FileDialog").Connect("canceled", Callable.From(OnCancelFD));
         GetNode("FileDialog").Connect("file_selected", Callable.From<string>(OnConfirmFD));
 
@@ -78,6 +100,7 @@ public partial class Main : Node
     [Export] PackedScene uiGraphItemPS;
     [Export] HBoxContainer uiGraphItemsCtr;
     [Export] UITime uiTime;
+    [Export] UISettings uiSettings;
 
     Vector2 lastMousePos;
 
@@ -88,8 +111,9 @@ public partial class Main : Node
 
     void OnOpenSettings()
     {
-        GetNode<Control>("Overlay").Show();
-        GetNode<Control>("Overlay/Panel").Show();
+        uiSettings.Start(this);
+        //GetNode<Control>("Overlay").Show();
+        //GetNode<Control>("Overlay/Panel").Show();
     }
 
     void OnFileMBClicked(long i)
@@ -108,7 +132,7 @@ public partial class Main : Node
 
     void OnSecond()
     {
-        GD.Print("sec");
+        //GD.Print("sec");
         var second = TimeSpan.FromSeconds(1f);
 
         elapsed += second;
@@ -182,8 +206,11 @@ public partial class Main : Node
 
         var tSD = Deserialize<MainSD>(path);
 
-        Settings = tSD.Settings ?? new MainSettings(this);
-        Settings.m = this;
+        //GD.Print("tsd", tSD);
+        //GD.Print("tsd.settings", tSD.Settings);
+
+
+        Settings = tSD.Settings ?? new MainSettings();
 
         lastAutoSavedAtMinute = 0;
         CreationDate = tSD.CreationDate;
@@ -221,7 +248,7 @@ public partial class Main : Node
         uiTimerWindow.Start(this, false);
         //SpawnGraphItem(DateTime.Now);
 
-        UpdateHoursAndLines();
+        UpdateAll();
         //UpdateDevScore();
     }
     List<string> recentSaveToPath = new List<string>();
@@ -232,6 +259,11 @@ public partial class Main : Node
 
         recentSaveToPath.Remove(saveToPath);
         recentSaveToPath.Insert(0, saveToPath);
+    }
+
+    public override void _ExitTree()
+    {
+        Serialize(recentSaveToPath, "user://Recent");
     }
 
     public override void _PhysicsProcess(double dT)
@@ -262,12 +294,12 @@ public partial class Main : Node
 
         //GD.Print(chd.Name);
 
-        for (var i = 0; i < 12; i++)
+        for (var i = 0; i <= 12; i++)
         {
-            var hChd = hoursCtr.GetChild<Control>(hoursCtr.GetChildCount() - 2 - i);
+            var hChd = hoursCtr.GetChild<Control>(hoursCtr.GetChildCount() - 1 - i);
             var lChd = linesCtr.GetChild<Control>(linesCtr.GetChildCount() - 1 - i);
 
-            hChd.Visible = i < Settings.TargetHours;
+            hChd.Visible = i <= Settings.TargetHours;
             lChd.Visible = i <= Settings.TargetHours;
         }
 

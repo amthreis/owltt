@@ -286,12 +286,13 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Node" type="Node" node_paths=PackedStringArray("uiTimerWindow", "uiGraphItemsCtr", "uiTime", "fileMB", "linesCtr", "hoursCtr", "UIScore")]
+[node name="Node" type="Node" node_paths=PackedStringArray("uiTimerWindow", "uiGraphItemsCtr", "uiTime", "uiSettings", "fileMB", "linesCtr", "hoursCtr", "UIScore")]
 script = ExtResource("1_xrtfl")
 uiTimerWindow = NodePath("Window")
 uiGraphItemPS = ExtResource("5_dywsh")
 uiGraphItemsCtr = NodePath("HUD/HBoxContainer/Main/Graph/Box/MarginContainer/Scroll/Margin/Items/uiGraphItemsCtr")
 uiTime = NodePath("HUD/TopBar/Time")
+uiSettings = NodePath("Overlay/Panel")
 fileMB = NodePath("HUD/TopBar/Menu")
 linesCtr = NodePath("Margin/Lines")
 hoursCtr = NodePath("HUD/HBoxContainer/Main/Graph/Hours")
@@ -393,11 +394,12 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 17.0
-offset_top = -10.0
-offset_right = 31.0
-offset_bottom = 8.0
+offset_top = -11.0
+offset_right = 39.0
+offset_bottom = 11.0
 grow_vertical = 2
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 12
 item_count = 6
 popup/item_0/text = "New"
@@ -415,9 +417,18 @@ popup/item_5/separator = true
 
 [node name="Icon" type="VBoxContainer" parent="HUD/TopBar/Menu"]
 modulate = Color(0.843137, 0.843137, 0.843137, 1)
-layout_mode = 2
-offset_right = 14.0
-offset_bottom = 18.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -9.0
+offset_right = 7.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 alignment = 1
 
@@ -1041,22 +1052,26 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.756863)
 metadata/_edit_lock_ = true
 
-[node name="Panel" type="Panel" parent="Overlay"]
-visible = false
+[node name="Panel" type="Panel" parent="Overlay" node_paths=PackedStringArray("overlay", "TargetHoursHS", "TargetDaysSB", "WorkingDaysOnlyCB", "closeBtn")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -197.0
-offset_top = -113.0
-offset_right = 194.0
-offset_bottom = 113.0
+offset_left = -195.5
+offset_top = -86.5
+offset_right = 195.5
+offset_bottom = 86.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_whuwc")
 script = ExtResource("15_0hstk")
+overlay = NodePath("..")
+TargetHoursHS = NodePath("Box/Margin/VBoxContainer/TargetHours/Control/HBoxContainer/Control/HSlider")
+TargetDaysSB = NodePath("Box/Margin/VBoxContainer/TargetHours2/Control/HBoxContainer/LineEdit")
+WorkingDaysOnlyCB = NodePath("Box/Margin/VBoxContainer/TargetHours3/CheckBox")
+closeBtn = NodePath("Box/Panel/Button")
 
 [node name="Box" type="VBoxContainer" parent="Overlay/Panel"]
 layout_mode = 1
@@ -1137,6 +1152,7 @@ metadata/_edit_lock_ = true
 layout_mode = 2
 
 [node name="Autosave" type="Control" parent="Overlay/Panel/Box/Margin/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 0
@@ -1275,7 +1291,7 @@ metadata/_edit_lock_ = true
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "5h"
+text = "1h"
 horizontal_alignment = 1
 vertical_alignment = 1
 
