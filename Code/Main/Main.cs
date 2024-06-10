@@ -172,6 +172,11 @@ public partial class Main : Node
     void OnMinute()
     {
         UIScore.SetValue(GetDevScore());
+
+        if (saveToPath != null)
+        {
+            OnSave();
+        }
     }
 
     float lastAutoSavedAtMinute;
@@ -264,6 +269,11 @@ public partial class Main : Node
     public override void _ExitTree()
     {
         Serialize(recentSaveToPath, "user://Recent");
+
+        if (saveToPath != null )
+        {
+            OnSave();
+        }
     }
 
     public override void _PhysicsProcess(double dT)
