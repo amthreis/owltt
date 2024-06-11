@@ -17,16 +17,16 @@ public class MainSD
 
     public MainSD(Main m)
     {
-        GD.Print("ss ");
+        //GD.Print("ss ");
         CreationDate  = m.CreationDate;
         ElapsedTotal  = m.ElapsedTotal;
         ElapsedPerDay = m.ElapsedPerDay;
         Settings = m.Settings ?? new MainSettings();
 
-        GD.Print("store ", CreationDate);
-        GD.Print("store ", ElapsedTotal);
-        GD.Print("store ", ElapsedPerDay);
-        GD.Print("store ", Settings);
+        //GD.Print("store ", CreationDate);
+        //GD.Print("store ", ElapsedTotal);
+        //GD.Print("store ", ElapsedPerDay);
+        //GD.Print("store ", Settings);
     }
     public MainSD()
     {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://csjndwc4wtdud"]
+[gd_scene load_steps=52 format=3 uid="uid://csjndwc4wtdud"]
 
 [ext_resource type="Texture2D" uid="uid://dn447rd515u2c" path="res://Source/Textures/Logo.svg" id="1_505f1"]
 [ext_resource type="Script" path="res://Code/UI/UIGraphLines.cs" id="1_r84ld"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Code/UI/UIScore.cs" id="5_h8d60"]
 [ext_resource type="Script" path="res://Code/UI/UITime.cs" id="5_u8fyq"]
 [ext_resource type="Gradient" uid="uid://cu52wsih8yd8u" path="res://Source/Stuff/ColorGrad.tres" id="6_0l0hp"]
+[ext_resource type="Texture2D" uid="uid://dh1hvrg421325" path="res://Source/Textures/owl48.png" id="7_4okby"]
 [ext_resource type="Texture2D" uid="uid://cycky6uaw4dny" path="res://Source/Textures/Stopwatch.png" id="7_n08x4"]
 [ext_resource type="Theme" uid="uid://cl77pq13m5a48" path="res://Source/MainTheme.tres" id="8_yppef"]
 [ext_resource type="Script" path="res://Code/UI/UIToggleTimer.cs" id="9_87fqq"]
@@ -616,8 +617,8 @@ step = 0.01
 value = 1.0
 fill_mode = 4
 nine_patch_stretch = true
-texture_under = ExtResource("1_505f1")
-texture_progress = ExtResource("1_505f1")
+texture_under = ExtResource("7_4okby")
+texture_progress = ExtResource("7_4okby")
 tint_under = Color(0.244776, 0.244776, 0.244776, 1)
 tint_progress = Color(0.172549, 0.611765, 0.678431, 1)
 script = ExtResource("5_h8d60")

@@ -22,6 +22,7 @@ public partial class Main : Node
 
     public void Activate(bool enable)
     {
+        //GD.Print("ACTIVATE ", enable);
         IsActive = enable;
 
         secondTimer.ProcessMode = enable ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
@@ -171,6 +172,7 @@ public partial class Main : Node
 
     void OnMinute()
     {
+        //GD.Print("Try autosave. STP = ", saveToPath);
         UIScore.SetValue(GetDevScore());
 
         if (saveToPath != null)
@@ -270,6 +272,7 @@ public partial class Main : Node
     {
         Serialize(recentSaveToPath, "user://Recent");
 
+        //GD.Print("exitTree");
         if (saveToPath != null )
         {
             OnSave();
@@ -346,6 +349,7 @@ public partial class Main : Node
         else
         {
             Load(path);
+            AddSaveToPath(path);
 
             //saveToPath = path;
 
@@ -367,6 +371,7 @@ public partial class Main : Node
         fd.Filters = new string[] { "*.owltt ; owl.tt Files" };
         fd.Show();
 
+        //recentSaveToPath = 
         //GetNode("FileDialog").Set("file_mode", 0);
         //GetNode("FileDialog").Call("set_filters", new string[] { "*.owltt ; owl.tt Files" });
         //GetNode("FileDialog").Call("show");
@@ -407,7 +412,7 @@ public partial class Main : Node
 
                 //if (dayScore > 0f)
                 {
-                    GD.Print($"Score of {currDay.ToString("dd/MM/yyyy")} ({currDay.DayOfWeek}): {dayScore}, w: {dayWeight}");
+                    //GD.Print($"Score of {currDay.ToString("dd/MM/yyyy")} ({currDay.DayOfWeek}): {dayScore}, w: {dayWeight}");
                 }
 
                 score += dayScore * dayWeight;
@@ -424,7 +429,7 @@ public partial class Main : Node
         }
         
 
-        GD.Print($"-------- total score:  { score / weight }");
+        //GD.Print($"-------- total score:  { score / weight }");
 
         return (float)(score /weight);
     }
@@ -542,12 +547,12 @@ public partial class Main : Node
     {
         saveMode = true;
         //Serialize(new TTaskerSD(this), "user://Tasks");
-        GD.Print("Saved");
 
         if (!saveAs && saveToPath != null)
         {
             //saveToPath = "";
-            //Serialize(new TTaskerSD(this), saveToPath);
+            GD.Print("Saved to ", saveToPath);
+            Serialize(new MainSD(this), saveToPath);
 
             //NoAsterisk();
         }
@@ -564,7 +569,7 @@ public partial class Main : Node
             GetNode("FileDialog").Set("file_mode", 4);
             GetNode("FileDialog").Call("set_filters", new string[] { "*.owltt ; owl.tt Files" });
             GetNode("FileDialog").Call("show");
-            GD.Print("Done");
+            //GD.Print("Done");
         }
     }
 
@@ -575,9 +580,9 @@ public partial class Main : Node
 
     public static void Serialize(object o, string path, Action callback = null)
     {
-        GD.Print("serialize");
+        //GD.Print("serialize");
         var lastSlash = path.LastIndexOf('/');
-        GD.Print("lastSlash", lastSlash);
+        //GD.Print("lastSlash", lastSlash);
 
         var substr = path.Substring(0, lastSlash);
         var _f = FileAccess.Open(path, FileAccess.ModeFlags.Write);
